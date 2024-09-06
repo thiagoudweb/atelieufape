@@ -7,5 +7,3 @@ import br.com.atelieufape.negocio.basico.UsuarioEntity;
 public interface UsuarioDados extends JpaRepository<UsuarioEntity, Long> {
 
 }
-
-//
