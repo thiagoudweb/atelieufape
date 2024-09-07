@@ -9,6 +9,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 
 @Entity
+// ( Usem essa estrágia de modelagem aqui. vamos trbalhar com uma tabela base no bd, ao invés de tebelas individuais com mapped ) 
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class UsuarioAbstract {
 
@@ -27,9 +28,12 @@ public abstract class UsuarioAbstract {
 	private String login;
 	@Column(nullable = false, unique = true)
 	private String senha;
+	@Column(nullable = false, unique = true)
+	private String email;
+	
 
 	// construtor //
-	public UsuarioAbstract(String nome, String sobrenome, String cpf, String rg, String login, String senha) {
+	public UsuarioAbstract(String nome, String sobrenome, String cpf, String rg, String login, String senha, String email) {
 		super();
 
 		this.nome = nome;
@@ -38,7 +42,16 @@ public abstract class UsuarioAbstract {
 		this.rg = rg;
 		this.login = login;
 		this.senha = senha;
+		this.email = email;
 
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Long getId() {

@@ -13,22 +13,9 @@ import jakarta.persistence.Table;
 @Table(name = " TABELA_USUARIO")
 public class UsuarioEntity extends UsuarioAbstract {
 	
-	public UsuarioEntity(String nome, String sobrenome, String cpf, String rg, String login, String senha) {
-		super(nome, sobrenome, cpf, rg, login, senha);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public UsuarioEntity(String nome, String sobrenome, String cpf, String rg, String login, String senha, String email) {
+		super(nome, sobrenome, cpf, rg, login, senha, email);
+		
 	}
 	
-
 }
