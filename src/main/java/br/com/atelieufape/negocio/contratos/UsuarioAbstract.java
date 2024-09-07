@@ -30,10 +30,10 @@ public abstract class UsuarioAbstract {
 	private String senha;
 	@Column(nullable = false, unique = true)
 	private String email;
-	
 
 	// construtor //
-	public UsuarioAbstract(String nome, String sobrenome, String cpf, String rg, String login, String senha, String email) {
+	public UsuarioAbstract(String nome, String sobrenome, String cpf, String rg, String login, String senha,
+			String email) {
 		super();
 
 		this.nome = nome;
