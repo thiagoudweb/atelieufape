@@ -22,4 +22,24 @@ public class UsuarioExpositorEntity extends UsuarioAbstract {
 	@Column(nullable = false)
 	private double saldoLoja;
 
+	// metodos especiais //
+	
+	public String getNomeLoja() {
+		return nomeLoja;
+	}
+	public void setNomeLoja(String nomeLoja) {
+		this.nomeLoja = nomeLoja;
+	}
+	public String getEmailLoja() {
+		return emailLoja;
+	}
+	public void setEmailLoja(String emailLoja) {
+		this.emailLoja = emailLoja;
+	}
+	public double getSaldoLoja() {
+		return saldoLoja;
+	}
+	public void setSaldoLoja(double saldoLoja) {
+		this.saldoLoja = saldoLoja;
+	}
 }

@@ -1,5 +1,7 @@
 package br.com.atelieufape.negocio.contratos;
 
+import java.util.List;
+
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 
 public interface ContratoCadastroUsuario {
@@ -10,8 +12,10 @@ public interface ContratoCadastroUsuario {
 
 	public void AtualizarUsuario(UsuarioEntity usuario);
 
-	public void DeletarUsuario(UsuarioEntity usuario);
+	public void DeletarUsuario(Long ID);
+	
+	public List<UsuarioEntity> ListarUsuarios ();
 
-	public UsuarioEntity BuscarUsuario(UsuarioEntity usuario);
+	public UsuarioEntity BuscarUsuarioPorID(Long id);
 
 }

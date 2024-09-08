@@ -8,8 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 
-@Entity
-// ( Usem essa estrágia de modelagem aqui. vamos trbalhar com uma tabela base no bd, ao invés de tebelas individuais com mapped ) 
+@Entity 
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class UsuarioAbstract {
 
@@ -26,7 +25,7 @@ public abstract class UsuarioAbstract {
 	private String rg;
 	@Column(nullable = false, unique = true)
 	private String login;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String senha;
 	@Column(nullable = false, unique = true)
 	private String email;
@@ -45,7 +44,8 @@ public abstract class UsuarioAbstract {
 		this.email = email;
 
 	}
-
+	
+	// metodos especiais //
 	public String getEmail() {
 		return email;
 	}
