@@ -14,23 +14,32 @@ import br.com.atelieufape.negocio.contratos.ContratoCadastroUsuario;
 @Service
 public class CadastroUsuario implements ContratoCadastroUsuario {
 
+	// construtor //
 	@Autowired
 	private UsuarioDados usuarioDados;
 
+	public CadastroUsuario(UsuarioDados usuarioDados) {
+		this.usuarioDados = usuarioDados;
+	}
+
+	// metodos opersonalizados//
 	@Override
 	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
 
-		if (usuarioDados.existsById(usuario.getId()) != true) {
+		Optional<UsuarioEntity> verificarCpf = usuarioDados.findByCpf(usuario.getCpf());
+
+		if (verificarCpf.isPresent()) {
+
+			throw new CadastroUsuarioException("Erro! O usuário ja esta cadastrado no sistema!");
+
+		}
+
+		else {
 
 			return usuarioDados.save(usuario);
 		}
 
-		else {
-			throw new CadastroUsuarioException("Erro! O usuário ja esta cadastrado no sistema!");
-		}
-
 	}
-
 	@Override
 	public void RemoverUsuario(UsuarioEntity usuario) {
 
@@ -95,6 +104,7 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 		}
 
 		else {
+
 			throw new CadastroUsuarioException("Usuario não encontrado!");
 		}
 
