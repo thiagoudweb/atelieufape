@@ -6,11 +6,11 @@ import br.com.atelieufape.negocio.basico.UsuarioEntity;
 
 public interface ContratoCadastroUsuario {
 
-	public void cadastrarUsuario(UsuarioEntity usuario);
+	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario);
 
 	public void RemoverUsuario(UsuarioEntity usuario);
 
-	public void AtualizarUsuario(UsuarioEntity usuario);
+	public UsuarioEntity AtualizarUsuario(UsuarioEntity usuario);
 
 	public void DeletarUsuario(Long ID);
 	

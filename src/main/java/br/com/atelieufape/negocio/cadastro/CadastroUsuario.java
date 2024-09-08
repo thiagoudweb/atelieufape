@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.atelieufape.dados.UsuarioDados;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
+import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroUsuario;
 
 @Service
@@ -17,52 +18,56 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 	private UsuarioDados usuarioDados;
 
 	@Override
-	public void cadastrarUsuario(UsuarioEntity usuario) {
+	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
 
-		try {
+		if (usuarioDados.existsById(usuario.getId()) != true) {
 
-			if (usuarioDados.existsById(usuario.getId()) != true) {
-				usuarioDados.save(usuario);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Usuario ja existe!");
+			return usuarioDados.save(usuario);
 		}
+
+		else {
+			throw new CadastroUsuarioException("Erro! O usuário ja esta cadastrado no sistema!");
+		}
+
 	}
 
 	@Override
 	public void RemoverUsuario(UsuarioEntity usuario) {
-		try {
-			if (usuarioDados.existsById(usuario.getId())) {
 
-				usuarioDados.deleteById(usuario.getId());
-			}
-		} catch (Exception e) {
+		if (usuarioDados.existsById(usuario.getId())) {
 
-			throw new RuntimeException("Usuario não econtrado.");
+			usuarioDados.deleteById(usuario.getId());
 		}
+
+		else {
+			throw new CadastroUsuarioException("Erro ao tentar remover usuário");
+		}
+
 	}
 
 	@Override
-	public void AtualizarUsuario(UsuarioEntity usuario) {
-		try {
+	public UsuarioEntity AtualizarUsuario(UsuarioEntity usuario) {
 
-			if (usuarioDados.existsById(usuario.getId())) {
-				usuarioDados.save(usuario);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Usuario não econtrado.");
+		if (usuarioDados.existsById(usuario.getId())) {
+			return usuarioDados.save(usuario);
 		}
+
+		else {
+
+			throw new CadastroUsuarioException("Usuário não encontrado");
+		}
+
 	}
 
 	@Override
 	public void DeletarUsuario(Long ID) {
-		try {
 
-			if (usuarioDados.existsById(ID)) {
-				usuarioDados.deleteById(ID);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Usuario não econtrado.");
+		if (usuarioDados.existsById(ID)) {
+			usuarioDados.deleteById(ID);
+		}
+
+		else {
+			throw new CadastroUsuarioException("Usuário não encontrado!");
 		}
 	}
 
@@ -73,14 +78,16 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 			List<UsuarioEntity> usuarios = usuarioDados.findAll();
 
 			return usuarios;
+
 		} catch (Exception e) {
-			throw new RuntimeException("Não há usuários cadastrado.");
+
+			throw new CadastroUsuarioException("Usuario ja existe!");
 		}
 	}
 
 	@Override
 	public UsuarioEntity BuscarUsuarioPorID(Long id) {
-		
+
 		Optional<UsuarioEntity> usuarioBuscado = usuarioDados.findById(id);
 
 		if (usuarioBuscado.isPresent()) {
@@ -88,7 +95,7 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 		}
 
 		else {
-			throw new RuntimeException("Usuário não encontrado.");
+			throw new CadastroUsuarioException("Usuario não encontrado!");
 		}
 
 	}
