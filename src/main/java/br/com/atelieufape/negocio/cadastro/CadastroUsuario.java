@@ -91,7 +91,7 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 		} catch (Exception e) {
 
-			throw new CadastroUsuarioException("Usuario ja existe!");
+			throw new CadastroUsuarioException("Usuário já existe!");
 		}
 	}
 
