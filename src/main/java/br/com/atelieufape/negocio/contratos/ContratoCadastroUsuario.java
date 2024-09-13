@@ -12,8 +12,6 @@ public interface ContratoCadastroUsuario {
 
 	public UsuarioEntity AtualizarUsuario(UsuarioEntity usuario);
 
-	public void DeletarUsuario(Long ID);
-	
 	public List<UsuarioEntity> ListarUsuarios ();
 
 	public UsuarioEntity BuscarUsuarioPorID(Long id);
