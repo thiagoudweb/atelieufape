@@ -40,6 +40,7 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 		}
 
 	}
+
 	@Override
 	public void RemoverUsuario(UsuarioEntity usuario) {
 
