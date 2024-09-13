@@ -26,7 +26,7 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 	@Override
 	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
 
-		Optional<UsuarioEntity> verificarCpf = usuarioDados.existByCpf(usuario.getCpf());
+		Optional<UsuarioEntity> verificarCpf = usuarioDados.findByCpf(usuario.getCpf());
 
 		if (verificarCpf.isPresent()) {
 
@@ -69,6 +69,17 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 	}
 
+	@Override
+	public void DeletarUsuario(Long ID) {
+
+		if (usuarioDados.existsById(ID)) {
+			usuarioDados.deleteById(ID);
+		}
+
+		else {
+			throw new CadastroUsuarioException("Usuário não encontrado!");
+		}
+	}
 
 	@Override
 	public List<UsuarioEntity> ListarUsuarios() {
@@ -86,26 +97,27 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 	@Override
 	public UsuarioEntity BuscarUsuarioPorID(Long id) {
-		try {
-			Optional<UsuarioEntity> usuarioBuscado = usuarioDados.findById(id);
 
-			if (usuarioBuscado.isPresent()) {
-				return usuarioBuscado.get();
-			} else {
-				throw new CadastroUsuarioException("Usuario não encontrado!");
-			}
-			}catch(Exception e){
-				throw new CadastroUsuarioException("Erro ao buscar usuário: "+e.getMessage());
-			}
+		Optional<UsuarioEntity> usuarioBuscado = usuarioDados.findById(id);
 
+		if (usuarioBuscado.isPresent()) {
+			return usuarioBuscado.get();
 		}
 
-    // metodos especiais //
-    public UsuarioDados getUsuarioDados() {
-        return usuarioDados;
-    }
+		else {
 
-    public void setUsuarioDados(UsuarioDados usuarioDados) {
-        this.usuarioDados = usuarioDados;
-    }
+			throw new CadastroUsuarioException("Usuario não encontrado!");
+		}
+
+	}
+
+	// metodos especiais //
+	public UsuarioDados getUsuarioDados() {
+		return usuarioDados;
+	}
+
+	public void setUsuarioDados(UsuarioDados usuarioDados) {
+		this.usuarioDados = usuarioDados;
+	}
+
 }

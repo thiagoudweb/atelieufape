@@ -44,11 +44,7 @@ public abstract class UsuarioAbstract {
 		this.email = email;
 
 	}
-
-	public UsuarioAbstract() {
-
-	}
-
+	
 	// metodos especiais //
 	public String getEmail() {
 		return email;
