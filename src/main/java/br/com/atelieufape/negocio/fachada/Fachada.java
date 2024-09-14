@@ -4,10 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
-import br.com.atelieufape.negocio.cadastro.CadastroUsuario;
+import br.com.atelieufape.negocio.cadastro.exception.AtualizarUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroExpositor;
@@ -15,58 +14,58 @@ import br.com.atelieufape.negocio.contratos.ContratoCadastroUsuario;
 
 @Service
 public class Fachada {
-	
+
 	@Autowired
 	private ContratoCadastroUsuario cadastroUsuario;
-	
+
 	@Autowired
 	private ContratoCadastroExpositor cadastroExpositor;
-	
-	//@Autowired
-	//private ContratoCarrinhoUsuario cadastroCarrinhoUsuario;
-	
-	//Usuario
-	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
+
+	// @Autowired
+	// private ContratoCarrinhoUsuario cadastroCarrinhoUsuario;
+
+	// Usuario
+	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
 		return this.cadastroUsuario.cadastrarUsuario(usuario);
 	}
-	
-	public void RemoverUsuario(UsuarioEntity usuario) {
-		this.cadastroUsuario.RemoverUsuario(usuario);
-	}
-	
-	public UsuarioEntity AtualizarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException{
-		return cadastroUsuario.AtualizarUsuario(usuario);
-	}
-	
-	public List<UsuarioEntity> ListarUsuarios(){
-		return this.cadastroUsuario.ListarUsuarios();
-	}
-	
-	public UsuarioEntity BuscarUsuarioPorID(Long id) throws CadastroUsuarioException{
-		return this.cadastroUsuario.BuscarUsuarioPorID(id);		
+
+	public void removerUsuario(UsuarioEntity usuario) {
+		this.cadastroUsuario.removerUsuario(usuario);
 	}
 
-	//Expositor
-	public UsuarioExpositorEntity cadastrarExpositor(UsuarioExpositorEntity expositor) throws CadastroExpositorException {
+	public UsuarioEntity atualizarUsuario(UsuarioEntity usuario) throws AtualizarUsuarioException {
+		return cadastroUsuario.atualizarUsuario(usuario);
+	}
+
+	public List<UsuarioEntity> ListarUsuarios() {
+		return this.cadastroUsuario.listarUsuarios();
+	}
+
+	public UsuarioEntity buscarUsuarioPorID(Long id) throws CadastroUsuarioException {
+		return this.cadastroUsuario.buscarUsuarioPorID(id);
+	}
+
+	// Expositor
+	public UsuarioExpositorEntity cadastrarExpositor(UsuarioExpositorEntity expositor)
+			throws CadastroExpositorException {
 		return this.cadastroExpositor.cadastrarExpositor(expositor);
 	}
-	
-	public void RemoverExpositor(UsuarioExpositorEntity expositor) {
-		this.cadastroExpositor.RemoverExpositor(expositor);
+
+	public void removerExpositor(UsuarioExpositorEntity expositor) {
+		this.cadastroExpositor.removerExpositor(expositor);
 	}
-	
-	public UsuarioExpositorEntity AtualizarExpositor(UsuarioExpositorEntity expositor) throws CadastroExpositorException{
-		return cadastroExpositor.AtualizarExpositor(expositor);
+
+	public UsuarioExpositorEntity atualizarExpositor(UsuarioExpositorEntity expositor)
+			throws CadastroExpositorException {
+		return cadastroExpositor.atualizarExpositor(expositor);
 	}
-	
-	public List<UsuarioExpositorEntity> ListarExpositores(){
-		return this.cadastroExpositor.ListarExpositores();
+
+	public List<UsuarioExpositorEntity> listarExpositores() {
+		return this.cadastroExpositor.listarExpositores();
 	}
-	
-	public UsuarioExpositorEntity BuscarUsuarioExpositorPorID(Long id) throws CadastroExpositorException{
-		return this.cadastroExpositor.BuscarUsuarioExpositorPorID(id);		
+
+	public UsuarioExpositorEntity buscarUsuarioExpositorPorID(Long id) throws CadastroExpositorException {
+		return this.cadastroExpositor.buscarUsuarioExpositorPorID(id);
 	}
-	
+
 }
-
-

@@ -2,8 +2,10 @@ package br.com.atelieufape.negocio.cadastro;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import br.com.atelieufape.dados.UsuarioDados;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
@@ -22,33 +24,32 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 	// metodos opersonalizados//
 	@Override
-    public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
-        Optional<UsuarioEntity> verificarCpf = usuarioDados.findByCpf(usuario.getCpf());
+	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
 
-        if (verificarCpf.isPresent()) {
-            throw new CadastroUsuarioException("Erro! O usuário já está cadastrado no sistema!");
-        } else {
-            return usuarioDados.save(usuario);
-        }
-    }
+		Optional<UsuarioEntity> verificarCpf = usuarioDados.findByCpf(usuario.getCpf());
 
+		if (verificarCpf.isPresent()) {
+			throw new CadastroUsuarioException("Erro! O usuário ja esta cadastrado no sistema!");
+		} else {
+			return usuarioDados.save(usuario);
+		}
+
+	}
 
 	@Override
-	public void RemoverUsuario(UsuarioEntity usuario) {
+	public void removerUsuario(UsuarioEntity usuario) {
 
 		if (usuarioDados.existsById(usuario.getId())) {
 
 			usuarioDados.deleteById(usuario.getId());
-		}
-
-		else {
+		} else {
 			throw new CadastroUsuarioException("Erro ao tentar remover usuário");
 		}
 
 	}
 
 	@Override
-	public UsuarioEntity AtualizarUsuario(UsuarioEntity usuario) {
+	public UsuarioEntity atualizarUsuario(UsuarioEntity usuario) {
 
 		if (usuarioDados.existsById(usuario.getId())) {
 			return usuarioDados.save(usuario);
@@ -61,9 +62,20 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 	}
 
+	@Override
+	public void deletarUsuario(Long ID) {
+
+		if (usuarioDados.existsById(ID)) {
+			usuarioDados.deleteById(ID);
+		}
+
+		else {
+			throw new CadastroUsuarioException("Usuário não encontrado!");
+		}
+	}
 
 	@Override
-	public List<UsuarioEntity> ListarUsuarios() {
+	public List<UsuarioEntity> listarUsuarios() {
 
 		try {
 			List<UsuarioEntity> usuarios = usuarioDados.findAll();
@@ -77,27 +89,19 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 	}
 
 	@Override
-	public UsuarioEntity BuscarUsuarioPorID(Long id) {
-		try {
-			Optional<UsuarioEntity> usuarioBuscado = usuarioDados.findById(id);
+	public UsuarioEntity buscarUsuarioPorID(Long id) {
 
-			if (usuarioBuscado.isPresent()) {
-				return usuarioBuscado.get();
-			} else {
-				throw new CadastroUsuarioException("Usuario não encontrado!");
-			}
-			}catch(Exception e){
-				throw new CadastroUsuarioException("Erro ao buscar usuário: "+e.getMessage());
-			}
+		Optional<UsuarioEntity> usuarioBuscado = usuarioDados.findById(id);
 
+		if (usuarioBuscado.isPresent()) {
+			return usuarioBuscado.get();
 		}
 
-    // metodos especiais //
-    public UsuarioDados getUsuarioDados() {
-        return usuarioDados;
-    }
+		else {
 
-    public void setUsuarioDados(UsuarioDados usuarioDados) {
-        this.usuarioDados = usuarioDados;
-    }
+			throw new CadastroUsuarioException("Usuario não encontrado!");
+		}
+
+	}
+
 }

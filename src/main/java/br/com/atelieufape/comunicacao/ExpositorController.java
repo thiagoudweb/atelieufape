@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
@@ -19,12 +20,13 @@ import br.com.atelieufape.negocio.fachada.Fachada;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:3000/")
+@RequestMapping("/expositor")
 public class ExpositorController {
 
     @Autowired
     private Fachada fachada;
 
-    @PostMapping(value = "/expositor")
+    @PostMapping("/cadastrar")
     public ResponseEntity<String> cadastrarExpositor(@RequestBody UsuarioExpositorEntity expositor) {
         try {
             fachada.cadastrarExpositor(expositor);
@@ -34,37 +36,38 @@ public class ExpositorController {
         }
     }
 
-    @GetMapping(value = "/expositor/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscarUsuarioExpositorPorID(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(fachada.BuscarUsuarioExpositorPorID(id));
+            return ResponseEntity.ok(fachada.buscarUsuarioExpositorPorID(id));
         } catch (CadastroExpositorException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @GetMapping(value = "/expositor")
+    @GetMapping("/listar")
     public ResponseEntity<List<UsuarioExpositorEntity>> listarExpositores() {
-        return ResponseEntity.ok(fachada.ListarExpositores());
+        return ResponseEntity.ok(fachada.listarExpositores());
     }
 
-    @PatchMapping(value = "/expositor/{id}")
-    public ResponseEntity<String> atualizarExpositor(@PathVariable Long id, @RequestBody UsuarioExpositorEntity expositor) {
+    @PatchMapping("/atualizar/{id}")
+    public ResponseEntity<String> atualizarExpositor(@PathVariable Long id,
+            @RequestBody UsuarioExpositorEntity expositor) {
         try {
             expositor.setId(id);
-            fachada.AtualizarExpositor(expositor);
+            fachada.atualizarExpositor(expositor);
             return ResponseEntity.ok("Expositor atualizado com sucesso!");
         } catch (CadastroExpositorException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @DeleteMapping(value = "/expositor/{id}")
+    @DeleteMapping("/remover/{id}")
     public ResponseEntity<String> removerExpositor(@PathVariable Long id) {
         try {
-            
-            UsuarioExpositorEntity expositor = fachada.BuscarUsuarioExpositorPorID(id);
-            fachada.RemoverExpositor(expositor);
+
+            UsuarioExpositorEntity expositor = fachada.buscarUsuarioExpositorPorID(id);
+            fachada.removerExpositor(expositor);
             return ResponseEntity.ok("Expositor removido com sucesso!");
         } catch (CadastroExpositorException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
