@@ -8,12 +8,14 @@ public interface ContratoCadastroUsuario {
 
 	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario);
 
-	public void RemoverUsuario(UsuarioEntity usuario);
+	public void removerUsuario(UsuarioEntity usuario);
 
-	public UsuarioEntity AtualizarUsuario(UsuarioEntity usuario);
+	public UsuarioEntity atualizarUsuario(UsuarioEntity usuario);
 
-	public List<UsuarioEntity> ListarUsuarios ();
+	public void deletarUsuario(Long ID);
 
-	public UsuarioEntity BuscarUsuarioPorID(Long id);
+	public List<UsuarioEntity> listarUsuarios();
+
+	public UsuarioEntity buscarUsuarioPorID(Long id);
 
 }
