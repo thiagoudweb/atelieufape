@@ -2,10 +2,8 @@ package br.com.atelieufape.negocio.cadastro;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.com.atelieufape.dados.UsuarioDados;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
@@ -24,22 +22,16 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 	// metodos opersonalizados//
 	@Override
-	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
+    public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
+        Optional<UsuarioEntity> verificarCpf = usuarioDados.findByCpf(usuario.getCpf());
 
-		Optional<UsuarioEntity> verificarCpf = usuarioDados.findByCpf(usuario.getCpf());
+        if (verificarCpf.isPresent()) {
+            throw new CadastroUsuarioException("Erro! O usuário já está cadastrado no sistema!");
+        } else {
+            return usuarioDados.save(usuario);
+        }
+    }
 
-		if (verificarCpf.isPresent()) {
-
-			throw new CadastroUsuarioException("Erro! O usuário ja esta cadastrado no sistema!");
-
-		}
-
-		else {
-
-			return usuarioDados.save(usuario);
-		}
-
-	}
 
 	@Override
 	public void RemoverUsuario(UsuarioEntity usuario) {
@@ -69,17 +61,6 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 	}
 
-	@Override
-	public void DeletarUsuario(Long ID) {
-
-		if (usuarioDados.existsById(ID)) {
-			usuarioDados.deleteById(ID);
-		}
-
-		else {
-			throw new CadastroUsuarioException("Usuário não encontrado!");
-		}
-	}
 
 	@Override
 	public List<UsuarioEntity> ListarUsuarios() {
@@ -97,27 +78,26 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 	@Override
 	public UsuarioEntity BuscarUsuarioPorID(Long id) {
+		try {
+			Optional<UsuarioEntity> usuarioBuscado = usuarioDados.findById(id);
 
-		Optional<UsuarioEntity> usuarioBuscado = usuarioDados.findById(id);
+			if (usuarioBuscado.isPresent()) {
+				return usuarioBuscado.get();
+			} else {
+				throw new CadastroUsuarioException("Usuario não encontrado!");
+			}
+			}catch(Exception e){
+				throw new CadastroUsuarioException("Erro ao buscar usuário: "+e.getMessage());
+			}
 
-		if (usuarioBuscado.isPresent()) {
-			return usuarioBuscado.get();
 		}
 
-		else {
+    // metodos especiais //
+    public UsuarioDados getUsuarioDados() {
+        return usuarioDados;
+    }
 
-			throw new CadastroUsuarioException("Usuario não encontrado!");
-		}
-
-	}
-
-	// metodos especiais //
-	public UsuarioDados getUsuarioDados() {
-		return usuarioDados;
-	}
-
-	public void setUsuarioDados(UsuarioDados usuarioDados) {
-		this.usuarioDados = usuarioDados;
-	}
-
+    public void setUsuarioDados(UsuarioDados usuarioDados) {
+        this.usuarioDados = usuarioDados;
+    }
 }

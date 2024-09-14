@@ -8,6 +8,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "TABELA_EXPOSITOR")
 public class UsuarioExpositorEntity extends UsuarioAbstract {
+	
+    // Construtor padrão
+    public UsuarioExpositorEntity() {
+        super();
+    }
 
 	public UsuarioExpositorEntity(String nome, String sobrenome, String cpf, String rg, String login, String senha,
 			String email) {
@@ -15,11 +20,8 @@ public class UsuarioExpositorEntity extends UsuarioAbstract {
 
 	}
 
-	@Column(unique = true, nullable = false)
 	private String nomeLoja;
-	@Column(unique = true, nullable = false)
 	private String emailLoja;
-	@Column(nullable = false)
 	private double saldoLoja;
 
 	// metodos especiais //

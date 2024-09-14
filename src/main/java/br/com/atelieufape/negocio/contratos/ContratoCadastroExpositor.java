@@ -12,8 +12,6 @@ public interface ContratoCadastroExpositor {
 	
 	public UsuarioExpositorEntity AtualizarExpositor(UsuarioExpositorEntity expositor);
 	
-	public void DeletarExpositor(Long ID);
-	
 	public List<UsuarioExpositorEntity> ListarExpositores ();
 	
 	public UsuarioExpositorEntity BuscarUsuarioExpositorPorID(Long id);
