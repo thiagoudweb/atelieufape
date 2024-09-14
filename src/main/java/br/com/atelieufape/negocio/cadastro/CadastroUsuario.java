@@ -2,10 +2,8 @@ package br.com.atelieufape.negocio.cadastro;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.com.atelieufape.dados.UsuarioDados;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
@@ -24,22 +22,16 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 	// metodos opersonalizados//
 	@Override
-	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
+    public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) {
+        Optional<UsuarioEntity> verificarCpf = usuarioDados.findByCpf(usuario.getCpf());
 
-		Optional<UsuarioEntity> verificarCpf = usuarioDados.existByCpf(usuario.getCpf());
+        if (verificarCpf.isPresent()) {
+            throw new CadastroUsuarioException("Erro! O usuário já está cadastrado no sistema!");
+        } else {
+            return usuarioDados.save(usuario);
+        }
+    }
 
-		if (verificarCpf.isPresent()) {
-
-			throw new CadastroUsuarioException("Erro! O usuário ja esta cadastrado no sistema!");
-
-		}
-
-		else {
-
-			return usuarioDados.save(usuario);
-		}
-
-	}
 
 	@Override
 	public void RemoverUsuario(UsuarioEntity usuario) {

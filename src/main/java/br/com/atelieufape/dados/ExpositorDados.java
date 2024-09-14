@@ -8,6 +8,6 @@ import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 
 public interface ExpositorDados extends JpaRepository<UsuarioExpositorEntity, Long > {
 	
-	Optional<UsuarioExpositorEntity> findByCpf (String cpf);
+	Optional<UsuarioExpositorEntity> existsByCpf (String cpf);
 
 }

@@ -2,16 +2,14 @@ package br.com.atelieufape.negocio.cadastro;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.com.atelieufape.negocio.contratos.ContratoCadastroExpositor;
 import br.com.atelieufape.dados.ExpositorDados;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
-import br.com.atelieufape.dados.UsuarioDados;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 
+@Service
 public class CadastroExpositor implements ContratoCadastroExpositor {
 
 	@Autowired
@@ -24,7 +22,7 @@ public class CadastroExpositor implements ContratoCadastroExpositor {
 	@Override
 	public UsuarioExpositorEntity cadastrarExpositor(UsuarioExpositorEntity expositor) {
 
-		Optional<UsuarioExpositorEntity> verificarCpf = expositorDados.findByCpf(expositor.getCpf());
+		Optional<UsuarioExpositorEntity> verificarCpf = expositorDados.existsByCpf(expositor.getCpf());
 
 		if (verificarCpf.isPresent()) {
 
@@ -100,19 +98,5 @@ public class CadastroExpositor implements ContratoCadastroExpositor {
 
 	public void setExpositorDados(ExpositorDados expositorDados) {
 		this.expositorDados = expositorDados;
-	}
-
-	@Override
-	public void DeletarExpositor(Long ID) {
-		
-		if (expositorDados.existsById(ID) ) {
-			expositorDados.deleteById(ID);
-			
-		} else {
-			
-			throw new CadastroExpositorException("Expositor não encontrado!");
-			
-		}
-		
 	}
 }
