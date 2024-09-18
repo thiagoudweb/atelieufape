@@ -22,6 +22,12 @@ public class ProdutoEntity {
     @Column(nullable = false)
     private double preco;
     
+
+
+    @Column(nullable = false)
+    private String categoria;
+    
+
     @Column(nullable = false)
     private String descricao;
     
@@ -39,9 +45,16 @@ public class ProdutoEntity {
     }
 
     //construtor com atributos
+
     public ProdutoEntity(String nome, double preco, String descricao, String condicao, String marca, int quantidade) {
         this.nome = nome;
         this.preco = preco;
+
+    public ProdutoEntity(String nome, double preco, String categoria, String descricao, String condicao, String marca, int quantidade) {
+        this.nome = nome;
+        this.preco = preco;
+        this.setCategoria(categoria);
+
         this.descricao = descricao;
         this.condicao = condicao;
         this.marca = marca;
@@ -73,7 +86,22 @@ public class ProdutoEntity {
         this.preco = preco;
     }
 
+
     public String getDescricao() {
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		if (Categoria.CATEGORIAS_PERMITIDAS.contains(categoria)) {
+	        this.categoria = categoria;
+	    } else {
+	        throw new IllegalArgumentException("A categoria " + categoria + " não é válida.");
+	    }
+	}
+
+	public String getDescricao() {
         return descricao;
     }
 
