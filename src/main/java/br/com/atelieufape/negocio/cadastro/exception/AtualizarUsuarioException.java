@@ -1,6 +1,6 @@
 package br.com.atelieufape.negocio.cadastro.exception;
 
-public class AtualizarUsuarioException extends RuntimeException {
+public class AtualizarUsuarioException extends UsuarioException {
 
     private static final long serialVersionUID = 1L;
 

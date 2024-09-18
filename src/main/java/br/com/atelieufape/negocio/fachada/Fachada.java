@@ -36,11 +36,12 @@ public class Fachada {
 		return this.cadastroUsuario.cadastrarUsuario(usuario);
 	}
 
-	public void removerUsuario(UsuarioEntity usuario) {
-		this.cadastroUsuario.removerUsuario(usuario);
+	public void removerUsuarioPorID(Long id ) throws CadastroUsuarioException{
+		
+		this.cadastroUsuario.deletarUsuario(id);
 	}
 
-	public UsuarioEntity atualizarUsuario(UsuarioEntity usuario) throws AtualizarUsuarioException {
+	public UsuarioEntity atualizarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
 		return cadastroUsuario.atualizarUsuario(usuario);
 	}
 
