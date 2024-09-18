@@ -10,9 +10,11 @@ import jakarta.persistence.Table;
 public class UsuarioEntity extends UsuarioAbstract {
 
     public UsuarioEntity(String nome, String sobrenome, String cpf, String rg, String senha,
-            String email) {
-        super(nome, sobrenome, cpf, rg, senha, email);
+            String email, Long id) {
+        super(nome, sobrenome, cpf, rg, senha, email, id);
 
     }
-
+    
+    public UsuarioEntity() {}
+    
 }

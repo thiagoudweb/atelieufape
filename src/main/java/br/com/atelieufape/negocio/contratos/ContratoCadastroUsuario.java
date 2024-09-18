@@ -8,7 +8,7 @@ public interface ContratoCadastroUsuario {
 
 	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario);
 
-	public void removerUsuario(UsuarioEntity usuario);
+//	public void removerUsuario(UsuarioEntity usuario);
 
 	public UsuarioEntity atualizarUsuario(UsuarioEntity usuario);
 

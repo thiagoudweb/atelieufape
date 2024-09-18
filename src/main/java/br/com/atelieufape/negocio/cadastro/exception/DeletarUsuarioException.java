@@ -1,10 +1,9 @@
 package br.com.atelieufape.negocio.cadastro.exception;
 
-public class CadastroUsuarioException extends UsuarioException{
-
+public class DeletarUsuarioException extends UsuarioException {
 	private static final long serialVersionUID = 1L;
 
-	public CadastroUsuarioException(String msgErro) {
+	public DeletarUsuarioException(String msgErro) {
 		super(msgErro);
 	}
 

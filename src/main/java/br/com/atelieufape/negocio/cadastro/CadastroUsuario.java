@@ -36,22 +36,24 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 	}
 
-	@Override
-	public void removerUsuario(UsuarioEntity usuario) {
-
-		if (usuarioDados.existsById(usuario.getId())) {
-
-			usuarioDados.deleteById(usuario.getId());
-		} else {
-			throw new CadastroUsuarioException("Erro ao tentar remover usuário");
-		}
-
-	}
+//	@Override
+//	public void removerUsuario(UsuarioEntity usuario) {
+//
+//		if (usuarioDados.existsById(usuario.getId())) {
+//
+//			usuarioDados.deleteById(usuario.getId());
+//		} else {
+//			throw new CadastroUsuarioException("Erro ao tentar remover usuário");
+//		}
+//
+//	}
 
 	@Override
 	public UsuarioEntity atualizarUsuario(UsuarioEntity usuario) {
 
-		if (usuarioDados.existsById(usuario.getId())) {
+		Optional<UsuarioEntity> verificarCpf = usuarioDados.findById(usuario.getId());
+
+		if (verificarCpf.isPresent()) {
 			return usuarioDados.save(usuario);
 		}
 
@@ -65,7 +67,9 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 	@Override
 	public void deletarUsuario(Long ID) {
 
-		if (usuarioDados.existsById(ID)) {
+		Optional<UsuarioEntity> verificarUsuario = usuarioDados.findById(ID);
+
+		if (verificarUsuario.isPresent()) {
 			usuarioDados.deleteById(ID);
 		}
 
@@ -82,9 +86,9 @@ public class CadastroUsuario implements ContratoCadastroUsuario {
 
 			return usuarios;
 
-		} catch (Exception e) {
+		} catch (CadastroUsuarioException e) {
 
-			throw new CadastroUsuarioException("Usuário já existe!");
+			throw new CadastroUsuarioException("Não existe usuários cadastrados!");
 		}
 	}
 
