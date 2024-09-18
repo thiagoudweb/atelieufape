@@ -11,57 +11,49 @@ import jakarta.persistence.Table;
 @Table(name = "TABELA_PRODUTO")
 public class ProdutoEntity {
 
-    //atributos
+    // atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     private String nome;
-    
+
     @Column(nullable = false)
     private double preco;
-    
-
 
     @Column(nullable = false)
     private String categoria;
-    
 
     @Column(nullable = false)
     private String descricao;
-    
+
     @Column(nullable = false)
     private String condicao;
-    
+
     @Column(nullable = false)
     private String marca;
-    
+
     @Column(nullable = false)
     private int quantidade;
 
-    //construtor padrao
+    // construtor padrão
     public ProdutoEntity() {
     }
 
-    //construtor com atributos
-
-    public ProdutoEntity(String nome, double preco, String descricao, String condicao, String marca, int quantidade) {
-        this.nome = nome;
-        this.preco = preco;
-
-    public ProdutoEntity(String nome, double preco, String categoria, String descricao, String condicao, String marca, int quantidade) {
+    // construtor com todos os atributos
+    public ProdutoEntity(String nome, double preco, String categoria, String descricao, String condicao, String marca,
+                         int quantidade) {
         this.nome = nome;
         this.preco = preco;
         this.setCategoria(categoria);
-
         this.descricao = descricao;
         this.condicao = condicao;
         this.marca = marca;
         this.quantidade = quantidade;
     }
 
-    //getters e setters
+    // getters e setters
     public Long getId() {
         return id;
     }
@@ -86,22 +78,19 @@ public class ProdutoEntity {
         this.preco = preco;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+    // fizar a categoria para deixar o usuario limitado a 3 opç~çoes
+    public void setCategoria(String categoria) {
+        if (Categoria.CATEGORIAS_PERMITIDAS.contains(categoria)) {  
+            this.categoria = categoria;
+        } else {
+            throw new IllegalArgumentException("A categoria " + categoria + " não é válida.");
+        }
+    }
 
     public String getDescricao() {
-
-	public String getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(String categoria) {
-		if (Categoria.CATEGORIAS_PERMITIDAS.contains(categoria)) {
-	        this.categoria = categoria;
-	    } else {
-	        throw new IllegalArgumentException("A categoria " + categoria + " não é válida.");
-	    }
-	}
-
-	public String getDescricao() {
         return descricao;
     }
 
@@ -131,5 +120,12 @@ public class ProdutoEntity {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    // método tostring 
+    @Override
+    public String toString() {
+        return "ProdutoEntity [id=" + id + ", nome=" + nome + ", preco=" + preco + ", categoria=" + categoria + 
+               ", descricao=" + descricao + ", condicao=" + condicao + ", marca=" + marca + ", quantidade=" + quantidade + "]";
     }
 }
