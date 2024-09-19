@@ -96,5 +96,7 @@ public class Fachada {
 	public void removerProduto(ProdutoEntity produto) throws CadastroProdutoException {
 		this.cadastroProduto.removerProduto(produto);
 	}
+	
+	
 
 }

@@ -27,7 +27,7 @@ public abstract class UsuarioAbstract {
 
 	// construtor //
 	public UsuarioAbstract(String nome, String sobrenome, String cpf, String rg, String senha,
-			String email, Long id) {
+			String email) {
 		super();
 
 		this.nome = nome;

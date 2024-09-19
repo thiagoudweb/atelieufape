@@ -11,8 +11,8 @@ public class UsuarioExpositorEntity extends UsuarioAbstract {
 	// Construtor padrão
 
 	public UsuarioExpositorEntity(String nome, String sobrenome, String cpf, String rg, String senha,
-			String email, Long id) {
-		super(nome, sobrenome, cpf, rg, senha, email, id);
+			String email) {
+		super(nome, sobrenome, cpf, rg, senha, email);
 
 	}
 
