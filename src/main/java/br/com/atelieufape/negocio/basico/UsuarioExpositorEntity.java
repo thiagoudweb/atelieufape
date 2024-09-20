@@ -9,20 +9,21 @@ import jakarta.persistence.Table;
 public class UsuarioExpositorEntity extends UsuarioAbstract {
 
 	// Construtor padrão
-	public UsuarioExpositorEntity() {
-        super();
-    }
+	
 
-	public UsuarioExpositorEntity(String nome, String sobrenome, String cpf, String rg, String senha,
-			String email, Long id) {
+	public UsuarioExpositorEntity(String nome, String sobrenome, String cpf, String rg, String senha, String email, Long id) {
 		super(nome, sobrenome, cpf, rg, senha, email, id);
 
 	}
 
+	public UsuarioExpositorEntity() {
+		super();
+	}
+	
 	private String nomeLoja;
 	private String emailLoja;
 	private double saldoLoja;
-	
+
 	// metodos especiais //
 
 	public String getNomeLoja() {

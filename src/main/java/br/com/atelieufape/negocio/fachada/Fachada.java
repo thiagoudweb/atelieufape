@@ -12,8 +12,10 @@ import br.com.atelieufape.negocio.cadastro.exception.AtualizarUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
+import br.com.atelieufape.negocio.contratos.ContratoCadastroCarrinho;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroExpositor;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroProduto;
+import br.com.atelieufape.negocio.contratos.ContratoCadastroProdutosCarrinho;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroUsuario;
 
 @Service
@@ -28,8 +30,12 @@ public class Fachada {
 	@Autowired
 	private ContratoCadastroProduto cadastroProduto;
 
-	// @Autowired
-	// private ContratoCarrinhoUsuario cadastroCarrinhoUsuario;
+	@Autowired
+	private ContratoCadastroCarrinho cadastroCarrinho;
+	
+	@Autowired
+	private ContratoCadastroProdutosCarrinho cadastroProdutosCarrinho;
+	
 
 	// Usuario
 	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
@@ -96,5 +102,9 @@ public class Fachada {
 	public void removerProduto(ProdutoEntity produto) throws CadastroProdutoException {
 		this.cadastroProduto.removerProduto(produto);
 	}
+	
+	// carrinho //
+	
+	
 
 }

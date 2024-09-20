@@ -11,121 +11,137 @@ import jakarta.persistence.Table;
 @Table(name = "TABELA_PRODUTO")
 public class ProdutoEntity {
 
-    // atributos
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	// atributos
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String nome;
+	@Column(nullable = false)
+	private String nome;
 
-    @Column(nullable = false)
-    private double preco;
+	@Column(nullable = false)
+	private double preco;
 
-    @Column(nullable = false)
-    private String categoria;
+	@Column(nullable = false)
+	private String categoria;
 
-    @Column(nullable = false)
-    private String descricao;
+	@Column(nullable = false)
+	private String descricao;
 
-    @Column(nullable = false)
-    private String condicao;
+	@Column(nullable = false)
+	private String condicao;
 
-    @Column(nullable = false)
-    private String marca;
+	@Column(nullable = false)
+	private String marca;
 
-    @Column(nullable = false)
-    private int quantidade;
+	@Column(nullable = false)
+	private int quantidade;
+//  o produto aq n vai precisar saber onde ele ta senddo colocado no carrinho. relacionamento unidirecional..
+//	@OneToOne
+//	private ProdutosCarrinhoEntity produtoNoCarrinho;
 
-    // construtor padrão
-    public ProdutoEntity() {
-    }
+	// construtor padrão
+	public ProdutoEntity() {
+	}
 
-    // construtor com todos os atributos
-    public ProdutoEntity(String nome, double preco, String categoria, String descricao, String condicao, String marca,
-                         int quantidade) {
-        this.nome = nome;
-        this.preco = preco;
-        this.setCategoria(categoria);
-        this.descricao = descricao;
-        this.condicao = condicao;
-        this.marca = marca;
-        this.quantidade = quantidade;
-    }
+	// construtor com todos os atributos
+	public ProdutoEntity(Long id, String nome, double preco, String categoria, String descricao, String condicao,
+			String marca, int quantidade, ProdutosCarrinhoEntity produtosNoCarrinho) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+		this.categoria = categoria;
+		this.descricao = descricao;
+		this.condicao = condicao;
+		this.marca = marca;
+		this.quantidade = quantidade;
+//		this.produtoNoCarrinho = produtosNoCarrinho;
+	}
 
-    // getters e setters
-    public Long getId() {
-        return id;
-    }
+	// getters e setters
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public double getPreco() {
-        return preco;
-    }
+	public double getPreco() {
+		return preco;
+	}
 
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
+//	public ProdutosCarrinhoEntity getProdutoNoCarrinho() {
+//		return produtoNoCarrinho;
+//	}
+//
+//	public void setProdutoNoCarrinho(ProdutosCarrinhoEntity produtoNoCarrinho) {
+//		this.produtoNoCarrinho = produtoNoCarrinho;
+//	}
 
-    public String getCategoria() {
-        return categoria;
-    }
-    // fizar a categoria para deixar o usuario limitado a 3 opç~çoes
-    public void setCategoria(String categoria) {
-        if (Categoria.CATEGORIAS_PERMITIDAS.contains(categoria)) {  
-            this.categoria = categoria;
-        } else {
-            throw new IllegalArgumentException("A categoria " + categoria + " não é válida.");
-        }
-    }
+	public void setPreco(double preco) {
+		this.preco = preco;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public String getCategoria() {
+		return categoria;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	// fizar a categoria para deixar o usuario limitado a 3 opç~çoes
+	public void setCategoria(String categoria) {
+		if (Categoria.CATEGORIAS_PERMITIDAS.contains(categoria)) {
+			this.categoria = categoria;
+		} else {
+			throw new IllegalArgumentException("A categoria " + categoria + " não é válida.");
+		}
+	}
 
-    public String getCondicao() {
-        return condicao;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public void setCondicao(String condicao) {
-        this.condicao = condicao;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public String getMarca() {
-        return marca;
-    }
+	public String getCondicao() {
+		return condicao;
+	}
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
+	public void setCondicao(String condicao) {
+		this.condicao = condicao;
+	}
 
-    public int getQuantidade() {
-        return quantidade;
-    }
+	public String getMarca() {
+		return marca;
+	}
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
 
-    // método tostring 
-    @Override
-    public String toString() {
-        return "ProdutoEntity [id=" + id + ", nome=" + nome + ", preco=" + preco + ", categoria=" + categoria + 
-               ", descricao=" + descricao + ", condicao=" + condicao + ", marca=" + marca + ", quantidade=" + quantidade + "]";
-    }
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	// método tostring
+	@Override
+	public String toString() {
+		return "ProdutoEntity [id=" + id + ", nome=" + nome + ", preco=" + preco + ", categoria=" + categoria
+				+ ", descricao=" + descricao + ", condicao=" + condicao + ", marca=" + marca + ", quantidade="
+				+ quantidade + "]";
+	}
 }
