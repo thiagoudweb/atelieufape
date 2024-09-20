@@ -18,7 +18,7 @@ public class UsuarioExpositorEntity extends UsuarioAbstract {
 	public UsuarioExpositorEntity() {
 		super();
 	}
-
+	
 	private String nomeLoja;
 	private String emailLoja;
 	private double saldoLoja;

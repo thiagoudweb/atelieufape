@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,6 +38,12 @@ public class ProdutoEntity {
 
     @Column(nullable = false)
     private int quantidade;
+    
+    @OneToOne
+    private ProdutosCarrinhoEntity produtoNoCarrinho;
+    
+    
+    
 
     // construtor padrão
     public ProdutoEntity() {
@@ -43,7 +51,7 @@ public class ProdutoEntity {
 
     // construtor com todos os atributos
     public ProdutoEntity(String nome, double preco, String categoria, String descricao, String condicao, String marca,
-                         int quantidade) {
+                         int quantidade, ProdutosCarrinhoEntity produtoCarrinho) {
         this.nome = nome;
         this.preco = preco;
         this.setCategoria(categoria);
@@ -51,6 +59,7 @@ public class ProdutoEntity {
         this.condicao = condicao;
         this.marca = marca;
         this.quantidade = quantidade;
+        this.produtoNoCarrinho = produtoCarrinho;
     }
 
     // getters e setters
@@ -81,7 +90,16 @@ public class ProdutoEntity {
     public String getCategoria() {
         return categoria;
     }
-    // fizar a categoria para deixar o usuario limitado a 3 opç~çoes
+    
+    public ProdutosCarrinhoEntity getProdutoNoCarrinho() {
+		return produtoNoCarrinho;
+	}
+
+	public void setProdutoNoCarrinho(ProdutosCarrinhoEntity produtoNoCarrinho) {
+		this.produtoNoCarrinho = produtoNoCarrinho;
+	}
+
+	// fizar a categoria para deixar o usuario limitado a 3 opç~çoes
     public void setCategoria(String categoria) {
         if (Categoria.CATEGORIAS_PERMITIDAS.contains(categoria)) {  
             this.categoria = categoria;

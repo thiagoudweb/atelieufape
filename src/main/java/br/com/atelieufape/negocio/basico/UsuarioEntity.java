@@ -15,6 +15,8 @@ public class UsuarioEntity extends UsuarioAbstract {
 
     }
     
-    public UsuarioEntity() {}
-    
+    public UsuarioEntity() {
+    	super();
+    }
+    	
 }
