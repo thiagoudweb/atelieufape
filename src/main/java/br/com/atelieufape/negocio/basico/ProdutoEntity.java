@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -38,14 +36,6 @@ public class ProdutoEntity {
 
     @Column(nullable = false)
     private int quantidade;
-    
-  //relação produto e expositor
-  	@ManyToOne
-  	@JoinColumn(name = "expositor_id", nullable = false)
-  	private UsuarioExpositorEntity usuarioExpositor;
-  //  o produto aq n vai precisar saber onde ele ta senddo colocado no carrinho. relacionamento unidirecional..
-//  	@OneToOne
-//  	private ProdutosCarrinhoEntity produtoNoCarrinho;
 
     // construtor padrão
     public ProdutoEntity() {
@@ -53,7 +43,7 @@ public class ProdutoEntity {
 
     // construtor com todos os atributos
     public ProdutoEntity(String nome, double preco, String categoria, String descricao, String condicao, String marca,
-                         int quantidade, UsuarioExpositorEntity usuarioExpositor) {
+                         int quantidade) {
         this.nome = nome;
         this.preco = preco;
         this.setCategoria(categoria);
@@ -61,7 +51,6 @@ public class ProdutoEntity {
         this.condicao = condicao;
         this.marca = marca;
         this.quantidade = quantidade;
-        this.usuarioExpositor = usuarioExpositor;
     }
 
     // getters e setters
@@ -133,12 +122,10 @@ public class ProdutoEntity {
         this.quantidade = quantidade;
     }
 
-
-	public UsuarioExpositorEntity getUsuarioExpositor() {
-        return usuarioExpositor;
-    }
-
-    public void setUsuarioExpositor(UsuarioExpositorEntity usuarioExpositor) {
-        this.usuarioExpositor = usuarioExpositor;
+    // método tostring 
+    @Override
+    public String toString() {
+        return "ProdutoEntity [id=" + id + ", nome=" + nome + ", preco=" + preco + ", categoria=" + categoria + 
+               ", descricao=" + descricao + ", condicao=" + condicao + ", marca=" + marca + ", quantidade=" + quantidade + "]";
     }
 }
