@@ -42,8 +42,17 @@ public class ProdutoController {
 		}catch (CadastroProdutoException e) {
 			return ResponseEntity.badRequest().body("Produto não encontrado!");
 		}
-		
 	}
+	
+    @GetMapping("/buscarPorNome/{nome}")
+    public ResponseEntity<?> buscarProdutoPorNome(@PathVariable String nome) {
+        try {
+            ProdutoEntity produto = fachada.buscarProdutoPorNome(nome);
+            return ResponseEntity.ok(produto);
+        } catch (CadastroProdutoException e) {
+            return ResponseEntity.badRequest().body("Produto não encontrado!");
+        }
+    }
 	
 	@GetMapping("/listar")
 	public ResponseEntity<List<ProdutoEntity>> listarProdutos() throws CadastroProdutoException{
