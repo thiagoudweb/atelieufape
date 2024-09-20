@@ -9,6 +9,9 @@ import jakarta.persistence.Table;
 public class UsuarioExpositorEntity extends UsuarioAbstract {
 
 	// Construtor padrão
+	public UsuarioExpositorEntity() {
+        super();
+    }
 
 	public UsuarioExpositorEntity(String nome, String sobrenome, String cpf, String rg, String senha,
 			String email, Long id) {

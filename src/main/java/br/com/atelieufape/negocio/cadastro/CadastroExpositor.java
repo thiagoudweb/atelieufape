@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.atelieufape.dados.ExpositorDados;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
+import br.com.atelieufape.negocio.cadastro.exception.ExpositorCpfDuplicadoException;
+import br.com.atelieufape.negocio.cadastro.exception.ExpositorEmailDuplicadoException;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroExpositor;
 
 @Service
@@ -24,14 +26,16 @@ public class CadastroExpositor implements ContratoCadastroExpositor {
 	@Override
 	public UsuarioExpositorEntity cadastrarExpositor(UsuarioExpositorEntity expositor) {
 
-		Optional<UsuarioExpositorEntity> verificarCpf = expositorDados.findByCpf(expositor.getCpf());
+	    Optional<UsuarioExpositorEntity> verificarCpf = expositorDados.findByCpf(expositor.getCpf());
+	    Optional<UsuarioExpositorEntity> verificarEmail = expositorDados.findByEmail(expositor.getEmail());
 
-		if (verificarCpf.isPresent()) {
-			throw new CadastroExpositorException("Erro! O usuário expositor já cadastrado no sistema.");
-		} else {
-			return expositorDados.save(expositor);
-		}
-
+	    if (verificarCpf.isPresent()) {
+	        throw new ExpositorCpfDuplicadoException("Erro: CPF já cadastrado no sistema.");
+	    } else if (verificarEmail.isPresent()) {
+	        throw new ExpositorEmailDuplicadoException("Erro: E-mail já cadastrado no sistema.");
+	    } else {
+	        return expositorDados.save(expositor);
+	    }
 	}
 
 	@Override
