@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
+import br.com.atelieufape.negocio.cadastro.exception.ExpositorCpfDuplicadoException;
+import br.com.atelieufape.negocio.cadastro.exception.ExpositorEmailDuplicadoException;
 import br.com.atelieufape.negocio.fachada.Fachada;
 
 @Controller
@@ -31,10 +33,15 @@ public class ExpositorController {
         try {
             fachada.cadastrarExpositor(expositor);
             return ResponseEntity.ok("Expositor cadastrado com sucesso!");
+        } catch (ExpositorCpfDuplicadoException | ExpositorEmailDuplicadoException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (CadastroExpositorException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(500).body("Erro desconhecido: " + e.getMessage());
         }
     }
+
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscarUsuarioExpositorPorID(@PathVariable Long id) {
