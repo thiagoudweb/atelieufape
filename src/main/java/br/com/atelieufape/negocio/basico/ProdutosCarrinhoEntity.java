@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,10 +24,10 @@ public class ProdutosCarrinhoEntity {
 	private CarrinhoEntity carrinhoUsuario;
 
 	// construtor com atributos //
-	
+
 	public ProdutosCarrinhoEntity(Long id, ProdutoEntity produto, int quantidadeDeProdutos, double valorFinal,
 			CarrinhoEntity carrinhoUsuario) {
-		super();
+		
 		this.id = id;
 		this.produto = produto;
 		this.quantidadeDeProdutos = quantidadeDeProdutos;
