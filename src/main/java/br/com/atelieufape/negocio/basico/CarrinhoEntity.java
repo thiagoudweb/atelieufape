@@ -2,7 +2,6 @@ package br.com.atelieufape.negocio.basico;
 
 import java.util.List;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,10 +23,11 @@ public class CarrinhoEntity {
 	private List<ProdutosCarrinhoEntity> produtosCarrinho;
 
 	// construtor padrão
-	// sempre q vcs forem criar qualquer classe de objeto, usem construtor padrão. o spring só consegue fazer o bean se tiver um construtor default explicito...!!
+	// sempre q vcs forem criar qualquer classe de objeto, usem construtor padrão. o
+	// spring só consegue fazer o bean se tiver um construtor default explicito...!!
 	public CarrinhoEntity() {
 	}
-	
+
 	// construtor com atributis//
 	public CarrinhoEntity(Long id, UsuarioEntity usuarioCarrinho, List<ProdutosCarrinhoEntity> produtosCarrinho) {
 
@@ -35,7 +35,7 @@ public class CarrinhoEntity {
 		this.usuarioCarrinho = usuarioCarrinho;
 		this.produtosCarrinho = produtosCarrinho;
 	}
-	
+
 	// metodos especiais
 	public Long getId() {
 		return id;
@@ -60,7 +60,5 @@ public class CarrinhoEntity {
 	public void setProdutosCarrinho(List<ProdutosCarrinhoEntity> produtosCarrinho) {
 		this.produtosCarrinho = produtosCarrinho;
 	}
-	
-	
 
 }
