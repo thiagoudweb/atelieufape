@@ -9,6 +9,7 @@ import br.com.atelieufape.negocio.basico.ProdutoEntity;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.basico.CompraEntity;
+import br.com.atelieufape.negocio.cadastro.exception.AtualizarUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
@@ -25,7 +26,7 @@ public class Fachada {
 
     @Autowired
     private ContratoCadastroExpositor cadastroExpositor;
-
+    
     @Autowired
     private ContratoCadastroProduto cadastroProduto;
 
@@ -37,7 +38,7 @@ public class Fachada {
         return this.cadastroUsuario.cadastrarUsuario(usuario);
     }
 
-    public void removerUsuarioPorID(Long id) throws CadastroUsuarioException {
+    public void removerUsuarioPorID(Long id ) throws CadastroUsuarioException{
         this.cadastroUsuario.deletarUsuario(id);
     }
 

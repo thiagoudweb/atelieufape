@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import br.com.atelieufape.negocio.basico.ProdutoEntity;
-import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
-import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.fachada.Fachada;
 
@@ -23,68 +21,63 @@ import br.com.atelieufape.negocio.fachada.Fachada;
 @CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/produto")
 public class ProdutoController {
-
+	
 	@Autowired
 	private Fachada fachada;
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<String> cadastrarProduto(@RequestBody ProdutoEntity produto) {
+	public ResponseEntity<String> cadastrarProduto(@RequestBody ProdutoEntity produto){
 		try {
-			Long expositorId = produto.getExpositor().getId();
-			UsuarioExpositorEntity expositor = fachada.buscarUsuarioExpositorPorID(expositorId);
-			produto.setExpositor(expositor);
 			fachada.cadastrarProduto(produto);
 			return ResponseEntity.ok("Produto cadastrado com sucesso!");
-		} catch (CadastroExpositorException e) {
-			return ResponseEntity.badRequest().body("Expositor não encontrado!");
-		} catch (CadastroProdutoException e) {
+		}catch (CadastroProdutoException e) {
 			return ResponseEntity.badRequest().body("Erro ao cadastrar o produto!");
-		}
+		}	
 	}
-
+	
 	@GetMapping("/buscar/{id}")
-	public ResponseEntity<?> buscarProdutoPorID(@PathVariable Long id) {
+	public ResponseEntity<?> buscarProdutoPorID(@PathVariable Long id){
 		try {
 			return ResponseEntity.ok(fachada.buscarProdutoPorID(id));
-		} catch (CadastroProdutoException e) {
+		}catch (CadastroProdutoException e) {
 			return ResponseEntity.badRequest().body("Produto não encontrado!");
 		}
 	}
-
-	@GetMapping("/buscarPorNome/{nome}")
-	public ResponseEntity<?> buscarProdutoPorNome(@PathVariable String nome) {
-		try {
-			ProdutoEntity produto = fachada.buscarProdutoPorNome(nome);
-			return ResponseEntity.ok(produto);
-		} catch (CadastroProdutoException e) {
-			return ResponseEntity.badRequest().body("Produto não encontrado!");
-		}
-	}
-
+	
+    @GetMapping("/buscarPorNome/{nome}")
+    public ResponseEntity<?> buscarProdutoPorNome(@PathVariable String nome) {
+        try {
+            ProdutoEntity produto = fachada.buscarProdutoPorNome(nome);
+            return ResponseEntity.ok(produto);
+        } catch (CadastroProdutoException e) {
+            return ResponseEntity.badRequest().body("Produto não encontrado!");
+        }
+    }
+	
 	@GetMapping("/listar")
-	public ResponseEntity<List<ProdutoEntity>> listarProdutos() throws CadastroProdutoException {
+	public ResponseEntity<List<ProdutoEntity>> listarProdutos() throws CadastroProdutoException{
 		return ResponseEntity.ok(fachada.listarProdutos());
 	}
-
+	
 	@PatchMapping("/atualizar/{id}")
-	public ResponseEntity<String> atualizarProduto(@PathVariable Long id,
-			@RequestBody ProdutoEntity produto) {
+	public ResponseEntity<String> atualizarProduto(@PathVariable Long id, 
+			@RequestBody ProdutoEntity produto){
 		try {
 			produto.setId(id);
 			fachada.atualizarProduto(produto);
 			return ResponseEntity.ok("Produto atualizado com sucesso!");
-		} catch (CadastroProdutoException e) {
+		}catch (CadastroProdutoException e) {
 			return ResponseEntity.badRequest().body("Erro ao atualizar o produto!");
 		}
 	}
-
+	
 	@DeleteMapping("/remover/{id}")
-	public ResponseEntity<String> removerProduto(@PathVariable Long id) {
+	public ResponseEntity<String> removerProduto(@PathVariable Long id){
 		try {
 			ProdutoEntity produto = fachada.buscarProdutoPorID(id);
 			fachada.removerProduto(produto);
 			return ResponseEntity.ok("Produto removido com sucesso!");
-		} catch (CadastroProdutoException e) {
+		}catch (CadastroProdutoException e) {
 			return ResponseEntity.badRequest().body("Erro ao remover o produto!");
 		}
 	}
