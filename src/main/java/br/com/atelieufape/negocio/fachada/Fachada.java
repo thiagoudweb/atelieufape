@@ -103,22 +103,22 @@ public class Fachada {
 
     // Compra
     public CompraEntity cadastrarCompra(CompraEntity compra) {
-        return cadastroCompra.cadastrarCompra(compra);
+        return this.cadastroCompra.cadastrarCompra(compra);
     }
 
     public CompraEntity buscarCompraPorID(Long id) {
-        return cadastroCompra.buscarCompraPorId(id);
+        return this.cadastroCompra.buscarCompraPorId(id);
     }
 
     public List<CompraEntity> listarCompras() {
-        return cadastroCompra.listarCompras();
+        return this.cadastroCompra.listarCompras();
     }
 
     public CompraEntity atualizarCompra(CompraEntity compra) {
-        return cadastroCompra.atualizarCompra(compra);
+        return this.cadastroCompra.atualizarCompra(compra);
     }
 
     public void removerCompra(Long id) {
-        cadastroCompra.removerCompra(id);
+        this.cadastroCompra.removerCompra(id);
     }
 }
