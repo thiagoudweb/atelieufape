@@ -1,5 +1,6 @@
 package br.com.atelieufape.negocio.basico;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -34,6 +35,12 @@ public class CarrinhoEntity {
 		this.id = id;
 		this.usuarioCarrinho = usuarioCarrinho;
 		this.produtosCarrinho = produtosCarrinho;
+	}
+	
+	// construtor para iniciar objeto //
+	public CarrinhoEntity(ProdutosCarrinhoEntity produtoNovo) {
+		this.produtosCarrinho = new ArrayList<>(); 
+	    this.produtosCarrinho.add(produtoNovo); 
 	}
 
 	// metodos especiais

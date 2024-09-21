@@ -27,12 +27,18 @@ public class ProdutosCarrinhoEntity {
 
 	public ProdutosCarrinhoEntity(Long id, ProdutoEntity produto, int quantidadeDeProdutos, double valorFinal,
 			CarrinhoEntity carrinhoUsuario) {
-		
+
 		this.id = id;
 		this.produto = produto;
 		this.quantidadeDeProdutos = quantidadeDeProdutos;
 		this.valorproduto = produto.getPreco();
 		this.carrinhoUsuario = carrinhoUsuario;
+	}
+
+	// construtor para iniciar objeto //
+	public ProdutosCarrinhoEntity(ProdutoEntity produto, int quantidade) {
+		this.produto = produto;
+		this.quantidadeDeProdutos = quantidade;
 	}
 
 	// construtor padrão //
