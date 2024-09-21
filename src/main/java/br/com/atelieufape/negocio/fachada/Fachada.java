@@ -11,7 +11,6 @@ import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.basico.CarrinhoEntity;
 import br.com.atelieufape.negocio.basico.CompraEntity;
-import br.com.atelieufape.negocio.cadastro.exception.AtualizarUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
@@ -26,132 +25,125 @@ import br.com.atelieufape.negocio.contratos.ContratoCadastroUsuario;
 @Service
 public class Fachada {
 
-	@Autowired
-	private ContratoCadastroUsuario cadastroUsuario;
+    @Autowired
+    private ContratoCadastroUsuario cadastroUsuario;
 
-	@Autowired
-	private ContratoCadastroExpositor cadastroExpositor;
+    @Autowired
+    private ContratoCadastroExpositor cadastroExpositor;
 
-	@Autowired
-	private ContratoCadastroProduto cadastroProduto;
+    @Autowired
+    private ContratoCadastroProduto cadastroProduto;
 
-	@Autowired
-	private ContratoCadastroCompra cadastroCompra;
+    @Autowired
+    private ContratoCadastroCompra cadastroCompra;
 
-	@Autowired
-	private ContratoCadastroCarrinho cadastroCarrinho;
+    @Autowired
+    private ContratoCadastroCarrinho cadastroCarrinho;
 
-	@Autowired
-	private ContratoCadastroProdutosCarrinho cadastroProdutoCarrinho;
+    @Autowired
+    private ContratoCadastroProdutosCarrinho cadastroProdutoCarrinho;
 
-	// Usuario
-	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
-		return this.cadastroUsuario.cadastrarUsuario(usuario);
-	}
+    // usuario
+    public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
+        return this.cadastroUsuario.cadastrarUsuario(usuario);
+    }
 
-	public void removerUsuarioPorID(Long id) throws CadastroUsuarioException {
-		this.cadastroUsuario.deletarUsuario(id);
-	}
+    public void removerUsuarioPorID(Long id) throws CadastroUsuarioException {
+        this.cadastroUsuario.deletarUsuario(id);
+    }
 
-	public UsuarioEntity atualizarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
-		return cadastroUsuario.atualizarUsuario(usuario);
-	}
+    public UsuarioEntity atualizarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
+        return this.cadastroUsuario.atualizarUsuario(usuario);
+    }
 
-	public List<UsuarioEntity> ListarUsuarios() {
-		return this.cadastroUsuario.listarUsuarios();
-	}
+    public List<UsuarioEntity> listarUsuarios() {
+        return this.cadastroUsuario.listarUsuarios();
+    }
 
-	public UsuarioEntity buscarUsuarioPorID(Long id) throws CadastroUsuarioException {
-		return this.cadastroUsuario.buscarUsuarioPorID(id);
-	}
+    public UsuarioEntity buscarUsuarioPorID(Long id) throws CadastroUsuarioException {
+        return this.cadastroUsuario.buscarUsuarioPorID(id);
+    }
 
-	// Expositor
-	public UsuarioExpositorEntity cadastrarExpositor(UsuarioExpositorEntity expositor)
-			throws CadastroExpositorException {
-		return this.cadastroExpositor.cadastrarExpositor(expositor);
-	}
+    // Expositor
+    public UsuarioExpositorEntity cadastrarExpositor(UsuarioExpositorEntity expositor)
+            throws CadastroExpositorException {
+        return this.cadastroExpositor.cadastrarExpositor(expositor);
+    }
 
-	public void removerExpositor(UsuarioExpositorEntity expositor) {
-		this.cadastroExpositor.removerExpositor(expositor);
-	}
+    public void removerExpositor(UsuarioExpositorEntity expositor) {
+        this.cadastroExpositor.removerExpositor(expositor);
+    }
 
-	public UsuarioExpositorEntity atualizarExpositor(UsuarioExpositorEntity expositor)
-			throws CadastroExpositorException {
-		return cadastroExpositor.atualizarExpositor(expositor);
-	}
+    public UsuarioExpositorEntity atualizarExpositor(UsuarioExpositorEntity expositor)
+            throws CadastroExpositorException {
+        return this.cadastroExpositor.atualizarExpositor(expositor);
+    }
 
-	public List<UsuarioExpositorEntity> listarExpositores() {
-		return this.cadastroExpositor.listarExpositores();
-	}
+    public List<UsuarioExpositorEntity> listarExpositores() {
+        return this.cadastroExpositor.listarExpositores();
+    }
 
-	public UsuarioExpositorEntity buscarUsuarioExpositorPorID(Long id) throws CadastroExpositorException {
-		return this.cadastroExpositor.buscarUsuarioExpositorPorID(id);
-	}
+    public UsuarioExpositorEntity buscarUsuarioExpositorPorID(Long id) throws CadastroExpositorException {
+        return this.cadastroExpositor.buscarUsuarioExpositorPorID(id);
+    }
 
-	// Produto
-	public ProdutoEntity cadastrarProduto(ProdutoEntity produto) throws CadastroProdutoException {
-		return this.cadastroProduto.cadastrarProduto(produto);
-	}
+    // produto
+    public ProdutoEntity cadastrarProduto(ProdutoEntity produto) throws CadastroProdutoException {
+        return this.cadastroProduto.cadastrarProduto(produto);
+    }
 
-	public ProdutoEntity buscarProdutoPorID(Long ID) throws CadastroProdutoException {
-		return this.cadastroProduto.buscarProdutoPorId(ID);
-	}
+    public ProdutoEntity buscarProdutoPorID(Long id) throws CadastroProdutoException {
+        return this.cadastroProduto.buscarProdutoPorId(id);
+    }
 
-	public ProdutoEntity buscarProdutoPorNome(String nome) throws CadastroProdutoException {
-		return this.cadastroProduto.buscarProdutoPorNome(nome);
-	}
+    public ProdutoEntity buscarProdutoPorNome(String nome) throws CadastroProdutoException {
+        return this.cadastroProduto.buscarProdutoPorNome(nome);
+    }
 
-	public List<ProdutoEntity> listarProdutos() throws CadastroProdutoException {
-		return this.cadastroProduto.listarProdutos();
-	}
+    public List<ProdutoEntity> listarProdutos() throws CadastroProdutoException {
+        return this.cadastroProduto.listarProdutos();
+    }
 
-	public ProdutoEntity atualizarProduto(ProdutoEntity produto) throws CadastroProdutoException {
-		return cadastroProduto.atualizarProduto(produto);
-	}
+    public ProdutoEntity atualizarProduto(ProdutoEntity produto) throws CadastroProdutoException {
+        return this.cadastroProduto.atualizarProduto(produto);
+    }
 
-	public void removerProduto(ProdutoEntity produto) throws CadastroProdutoException {
-		this.cadastroProduto.removerProduto(produto);
-	}
+    public void removerProduto(ProdutoEntity produto) throws CadastroProdutoException {
+        this.cadastroProduto.removerProduto(produto);
+    }
 
-	// Compra
-	public CompraEntity cadastrarCompra(CompraEntity compra) {
-		return cadastroCompra.cadastrarCompra(compra);
-	}
+    // compra
+    public CompraEntity cadastrarCompra(CompraEntity compra) {
+        return this.cadastroCompra.cadastrarCompra(compra);
+    }
 
-	public CompraEntity buscarCompraPorID(Long id) {
-		return cadastroCompra.buscarCompraPorId(id);
-	}
+    public CompraEntity buscarCompraPorID(Long id) {
+        return this.cadastroCompra.buscarCompraPorId(id);
+    }
 
-	public List<CompraEntity> listarCompras() {
-		return cadastroCompra.listarCompras();
-	}
+    public List<CompraEntity> listarCompras() {
+        return this.cadastroCompra.listarCompras();
+    }
 
-	public CompraEntity atualizarCompra(CompraEntity compra) {
-		return cadastroCompra.atualizarCompra(compra);
-	}
+    public CompraEntity atualizarCompra(CompraEntity compra) {
+        return this.cadastroCompra.atualizarCompra(compra);
+    }
 
-	public void removerCompra(Long id) {
-		cadastroCompra.removerCompra(id);
-	}
+    public void removerCompra(Long id) {
+        this.cadastroCompra.removerCompra(id);
+    }
 
-	// carrinho //
-	
-	// Classe de cadastro de produto: essa classe aq contem a logica de cadastrar o
-	// produto, envolvendo a busca pelo produto, a associação com o usuario, o
-	// salvamento dos itens do carrinho ( em cascata ) e o salvamento do carrinho em
-	// sí!
-	public CarrinhoEntity adicionarProdutoCarrinho(Long id, int quantidade)
-			throws CarrinhoException, CadastroProdutoException {
+    // carrinho
+    public CarrinhoEntity adicionarProdutoCarrinho(Long id, int quantidade)
+            throws CarrinhoException, CadastroProdutoException {
 
-		if (quantidade <= 0) {
-			throw new CarrinhoException("A quantidade de produtos selecionados é invalida");
-		} else {
-			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
-			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
-			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
-			return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
-		}
-
-	}
-
+        if (quantidade <= 0) {
+            throw new CarrinhoException("A quantidade de produtos selecionados é inválida");
+        } else {
+            ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
+            ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
+            CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
+            return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
+        }
+    }
 }
