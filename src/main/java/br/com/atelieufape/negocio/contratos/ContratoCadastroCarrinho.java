@@ -1,7 +1,5 @@
 package br.com.atelieufape.negocio.contratos;
 
-import java.util.List;
-
 import br.com.atelieufape.negocio.basico.CarrinhoEntity;
 
 public interface ContratoCadastroCarrinho {
@@ -12,5 +10,5 @@ public interface ContratoCadastroCarrinho {
 
 	public CarrinhoEntity atualizarCarrinho(CarrinhoEntity carrinho);
 
-	public List<CarrinhoEntity> listarCarrinhos();
+	public CarrinhoEntity pegarCarrinho(Long id);
 }
