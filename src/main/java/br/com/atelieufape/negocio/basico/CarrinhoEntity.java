@@ -1,7 +1,9 @@
 package br.com.atelieufape.negocio.basico;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,12 +21,11 @@ public class CarrinhoEntity {
 	private Long id;
 	@ManyToOne
 	private UsuarioEntity usuarioCarrinho;
-	@OneToMany
+	@OneToMany(mappedBy = "carrinhoUsuario", cascade = CascadeType.ALL)
 	private List<ProdutosCarrinhoEntity> produtosCarrinho;
+	private double saldoProdutos;
 
-	// construtor padrão
-	// sempre q vcs forem criar qualquer classe de objeto, usem construtor padrão. o
-	// spring só consegue fazer o bean se tiver um construtor default explicito...!!
+	// construtor padrão //
 	public CarrinhoEntity() {
 	}
 
@@ -34,6 +35,12 @@ public class CarrinhoEntity {
 		this.id = id;
 		this.usuarioCarrinho = usuarioCarrinho;
 		this.produtosCarrinho = produtosCarrinho;
+	}
+	
+	// construtor para iniciar objeto //
+	public CarrinhoEntity(ProdutosCarrinhoEntity produtoNovo) {
+		this.produtosCarrinho = new ArrayList<>(); 
+	    this.produtosCarrinho.add(produtoNovo); 
 	}
 
 	// metodos especiais
@@ -59,6 +66,14 @@ public class CarrinhoEntity {
 
 	public void setProdutosCarrinho(List<ProdutosCarrinhoEntity> produtosCarrinho) {
 		this.produtosCarrinho = produtosCarrinho;
+	}
+
+	public double getSaldoProdutos() {
+		return saldoProdutos;
+	}
+
+	public void setSaldoProdutos(double saldoProdutos) {
+		this.saldoProdutos = saldoProdutos;
 	}
 
 }

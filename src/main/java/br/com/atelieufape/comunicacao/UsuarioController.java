@@ -80,7 +80,7 @@ public class UsuarioController {
 	@GetMapping("/listar")
 	public ResponseEntity<?> listarUsuarios() {
 		try {
-			return ResponseEntity.ok(fachada.ListarUsuarios());
+			return ResponseEntity.ok(fachada.listarUsuarios());
 		} catch (UsuarioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

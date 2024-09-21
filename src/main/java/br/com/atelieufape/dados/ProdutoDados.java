@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import br.com.atelieufape.negocio.basico.ProdutoEntity;
-
+@Repository
 public interface ProdutoDados extends JpaRepository<ProdutoEntity, Long> {
 	
 	Optional<ProdutoEntity> findByNome (String nome);

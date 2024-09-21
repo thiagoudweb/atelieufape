@@ -7,7 +7,9 @@ public interface ContratoCadastroProdutosCarrinho {
 
 	public ProdutosCarrinhoEntity salvarProdutosCarrinho(ProdutosCarrinhoEntity produtos);
 
-	public ProdutosCarrinhoEntity deletarProdutosCarrinho(Long id);
+	public void deletarProdutosCarrinho(Long id);
+	
+	public void deletarUnidadeDeProdutos(Long id, int quant);
 
 	public ProdutosCarrinhoEntity atualizarProdutosCarrinho(ProdutosCarrinhoEntity produtos);
 

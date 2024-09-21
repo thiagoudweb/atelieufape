@@ -1,46 +1,49 @@
 package br.com.atelieufape.negocio.cadastro;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.atelieufape.dados.CarrinhoDados;
 import br.com.atelieufape.negocio.basico.CarrinhoEntity;
+import br.com.atelieufape.negocio.cadastro.exception.CarrinhoNaoEncontradoException;
+import br.com.atelieufape.negocio.cadastro.exception.CarrinhoVazioException;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroCarrinho;
-
 
 @Service
 public class CadastroCarrinhoUsuario implements ContratoCadastroCarrinho {
-	
+
 	@Autowired
 	private CarrinhoDados carrinhoDados;
 
 	@Override
 	public CarrinhoEntity salvarCarrinho(CarrinhoEntity carrinho) {
-		// TODO Auto-generated method stub
-		return null;
+		return carrinhoDados.save(carrinho);
 	}
 
 	@Override
 	public void deletarCarrinhoPorId(Long id) {
-		// TODO Auto-generated method stub
-		
+		carrinhoDados.deleteById(id);
+
 	}
 
 	@Override
 	public CarrinhoEntity atualizarCarrinho(CarrinhoEntity carrinho) {
-		// TODO Auto-generated method stub
-		return null;
+		return carrinhoDados.save(carrinho);
+		
 	}
 
 	@Override
-	public List<CarrinhoEntity> listarCarrinhos() {
-		// TODO Auto-generated method stub
-		return null;
+	public CarrinhoEntity pegarCarrinho(Long usuarioId) throws CarrinhoNaoEncontradoException {
+	    Optional<CarrinhoEntity> carrinho = carrinhoDados.findByUsuarioCarrinho_Id(usuarioId);
+	    
+	    if (carrinho.isPresent()) {
+	        return carrinho.get();
+	    } else {
+	        throw new CarrinhoNaoEncontradoException("Carrinho não encontrado para o usuário.");
+	    }
 	}
-	
-	
-	
-	
+
 }
