@@ -3,7 +3,6 @@ package br.com.atelieufape.negocio.cadastro;
 import br.com.atelieufape.negocio.basico.CompraEntity;
 import br.com.atelieufape.dados.CompraDados;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroCompra;
-import br.com.atelieufape.negocio.cadastro.exception.CompraDuplicadaException;
 import br.com.atelieufape.negocio.cadastro.exception.CompraNaoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +17,6 @@ public class CadastroCompraEntity implements ContratoCadastroCompra {
 
     @Override
     public CompraEntity cadastrarCompra(CompraEntity compra) {
-        if (compraDados.existsById(compra.getId())) {
-            throw new CompraDuplicadaException("Compra já cadastrada com esse ID.");
-        }
         return compraDados.save(compra);
     }
 
