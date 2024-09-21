@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,9 +38,14 @@ public class ProdutoEntity {
 
 	@Column(nullable = false)
 	private int quantidade;
-//  o produto aq n vai precisar saber onde ele ta senddo colocado no carrinho. relacionamento unidirecional..
-//	@OneToOne
-//	private ProdutosCarrinhoEntity produtoNoCarrinho;
+
+	@ManyToOne
+	@JoinColumn(name = "expositor_id", nullable = false)
+	private UsuarioExpositorEntity expositor;
+	// o produto aq n vai precisar saber onde ele ta senddo colocado no carrinho.
+	// relacionamento unidirecional..
+	// @OneToOne
+	// private ProdutosCarrinhoEntity produtoNoCarrinho;
 
 	// construtor padrão
 	public ProdutoEntity() {
@@ -56,7 +63,7 @@ public class ProdutoEntity {
 		this.condicao = condicao;
 		this.marca = marca;
 		this.quantidade = quantidade;
-//		this.produtoNoCarrinho = produtosNoCarrinho;
+		// this.produtoNoCarrinho = produtosNoCarrinho;
 	}
 
 	// getters e setters
@@ -80,13 +87,13 @@ public class ProdutoEntity {
 		return preco;
 	}
 
-//	public ProdutosCarrinhoEntity getProdutoNoCarrinho() {
-//		return produtoNoCarrinho;
-//	}
-//
-//	public void setProdutoNoCarrinho(ProdutosCarrinhoEntity produtoNoCarrinho) {
-//		this.produtoNoCarrinho = produtoNoCarrinho;
-//	}
+	// public ProdutosCarrinhoEntity getProdutoNoCarrinho() {
+	// return produtoNoCarrinho;
+	// }
+	//
+	// public void setProdutoNoCarrinho(ProdutosCarrinhoEntity produtoNoCarrinho) {
+	// this.produtoNoCarrinho = produtoNoCarrinho;
+	// }
 
 	public void setPreco(double preco) {
 		this.preco = preco;
@@ -135,6 +142,14 @@ public class ProdutoEntity {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public UsuarioExpositorEntity getExpositor() {
+		return expositor;
+	}
+
+	public void setExpositor(UsuarioExpositorEntity expositor) {
+		this.expositor = expositor;
 	}
 
 	// método tostring
