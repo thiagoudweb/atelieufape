@@ -19,7 +19,7 @@ public class ProdutosCarrinhoEntity {
 	@ManyToOne
 	private ProdutoEntity produto;
 	private int quantidadeDeProdutos;
-	private double valorFinal;
+	private double valorproduto;
 	@ManyToOne
 	private CarrinhoEntity carrinhoUsuario;
 
@@ -31,7 +31,7 @@ public class ProdutosCarrinhoEntity {
 		this.id = id;
 		this.produto = produto;
 		this.quantidadeDeProdutos = quantidadeDeProdutos;
-		this.valorFinal = valorFinal;
+		this.valorproduto = produto.getPreco();
 		this.carrinhoUsuario = carrinhoUsuario;
 	}
 
@@ -67,11 +67,11 @@ public class ProdutosCarrinhoEntity {
 	}
 
 	public double getValorFinal() {
-		return valorFinal;
+		return valorproduto;
 	}
 
 	public void setValorFinal(double valorFinal) {
-		this.valorFinal = valorFinal;
+		this.valorproduto = valorFinal;
 	}
 
 	public CarrinhoEntity getCarrinhoUsuario() {
