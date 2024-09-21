@@ -26,7 +26,7 @@ public class CadastroProdutosCarrinhoUsuario implements ContratoCadastroProdutos
 // cadastrar produto. aq tem uma logica simples para não duplicar o produto na tbaela do produtoscarrinhos.
 	@Override
 	public ProdutosCarrinhoEntity salvarProdutosCarrinho(ProdutosCarrinhoEntity produtos) {
-		Optional<ProdutosCarrinhoEntity> produtoJaSalvo = produtosCarrinho.buscarPorId(produtos.getId());
+		Optional<ProdutosCarrinhoEntity> produtoJaSalvo = produtosCarrinho.findById(produtos.getId());
 		if (produtoJaSalvo.isPresent()) {
 
 			ProdutosCarrinhoEntity produtoAtualizado = produtoJaSalvo.get();

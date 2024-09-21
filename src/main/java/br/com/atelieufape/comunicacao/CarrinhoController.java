@@ -8,5 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/carrinho")
 public class CarrinhoController {
-
+	
+	
 }
+
