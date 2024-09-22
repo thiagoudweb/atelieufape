@@ -13,9 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.atelieufape.negocio.basico.CarrinhoEntity;
+import br.com.atelieufape.negocio.basico.CompraEntity;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.cadastro.exception.UsuarioException;
 import br.com.atelieufape.negocio.fachada.Fachada;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -25,6 +31,11 @@ public class UsuarioController {
 	@Autowired
 	private Fachada fachada;
 
+    @Operation(summary = "Cadastra um novo usuário", description = "Cadastra um novo usuário no sistema.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuário cadastrado com sucesso."),
+			@ApiResponse(responseCode = "400", description = "Erro ao cadastrar o usuário.", content = @Content)
+	})
 	@PostMapping("/cadastrar")
 	public ResponseEntity<?> cadastrarUsuario(@RequestBody UsuarioEntity usuario) {
 		try {
@@ -38,6 +49,11 @@ public class UsuarioController {
 		}
 	}
 
+    @Operation(summary = "Atualiza um usuário.", description = "Atualiza um usuário específico pelo ID.")
+ 	@ApiResponses(value = {
+ 			@ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso."),
+ 			@ApiResponse(responseCode = "400", description = "Erro ao atualizar o usuário.", content = @Content)
+ 	})
 	@PatchMapping("/atualizar/{id}")
 	public ResponseEntity<String> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioEntity usuario) {
 
@@ -46,7 +62,7 @@ public class UsuarioController {
 			UsuarioEntity user = usuario;
 			user.setId(id);
 			fachada.atualizarUsuario(user);
-			return ResponseEntity.ok("O Usuario" + user.getNome() + "Atualizado");
+			return ResponseEntity.ok("O Usuario " + user.getNome() + " foi atualizado");
 
 		} catch (UsuarioException e) {
 
@@ -54,6 +70,11 @@ public class UsuarioController {
 		}
 	}
 
+    @Operation(summary = "Busca um usuário por ID", description = "Retorna os detalhes de um usuário específico pelo seu ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuário encontrado.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CompraEntity.class))),
+			@ApiResponse(responseCode = "400", description = "Usuário não encontrado.", content = @Content)
+	})
 	@GetMapping("/buscar/{id}")
 	public ResponseEntity<?> buscarUsuarioPorID(@PathVariable Long id) {
 		try {
@@ -63,6 +84,11 @@ public class UsuarioController {
 		}
 	}
 
+    @Operation(summary = "Remove um usuário.", description = "Remove um usuário específico pelo ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuário removido com sucesso."),
+			@ApiResponse(responseCode = "400", description = "Erro ao remover o usuário.", content = @Content)
+	})
 	@DeleteMapping("/deletar/{id}")
 	public ResponseEntity<String> deletarUsuarioPorID(@PathVariable Long id) {
 
@@ -77,6 +103,8 @@ public class UsuarioController {
 		}
 	}
 
+    @Operation(summary = "Lista todos os usuários", description = "Retorna uma lista com todos os usuários cadastrados.")
+   	@ApiResponse(responseCode = "200", description = "Lista de expositores retornada com sucesso.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CompraEntity.class)))
 	@GetMapping("/listar")
 	public ResponseEntity<?> listarUsuarios() {
 		try {
