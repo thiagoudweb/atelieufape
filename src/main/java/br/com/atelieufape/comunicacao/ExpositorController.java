@@ -14,17 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.atelieufape.negocio.basico.CompraEntity;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.ExpositorCpfDuplicadoException;
 import br.com.atelieufape.negocio.cadastro.exception.ExpositorEmailDuplicadoException;
 import br.com.atelieufape.negocio.fachada.Fachada;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -34,11 +28,6 @@ public class ExpositorController {
     @Autowired
     private Fachada fachada;
 
-    @Operation(summary = "Cadastra um novo expositor", description = "Cadastra um novo usuário como expositor no sistema.")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Expositor cadastrado com sucesso."),
-			@ApiResponse(responseCode = "400", description = "Erro ao cadastrar o expositor.", content = @Content)
-	})
     @PostMapping("/cadastrar")
     public ResponseEntity<String> cadastrarExpositor(@RequestBody UsuarioExpositorEntity expositor) {
         try {
@@ -53,11 +42,7 @@ public class ExpositorController {
         }
     }
 
-    @Operation(summary = "Busca um expositor por ID", description = "Retorna os detalhes de um expositor específico pelo seu ID.")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Expositor encontrado.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CompraEntity.class))),
-			@ApiResponse(responseCode = "400", description = "Expositor não encontrado.", content = @Content)
-	})
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscarUsuarioExpositorPorID(@PathVariable Long id) {
         try {
@@ -67,18 +52,11 @@ public class ExpositorController {
         }
     }
 
-    @Operation(summary = "Lista todos os expositores", description = "Retorna uma lista com todos os expositores cadastrados.")
-	@ApiResponse(responseCode = "200", description = "Lista de expositores retornada com sucesso.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CompraEntity.class)))
     @GetMapping("/listar")
     public ResponseEntity<List<UsuarioExpositorEntity>> listarExpositores() {
         return ResponseEntity.ok(fachada.listarExpositores());
     }
 
-    @Operation(summary = "Atualiza um expositor.", description = "Atualiza um expositor específico pelo ID.")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Expositor atualizado com sucesso."),
-			@ApiResponse(responseCode = "400", description = "Erro ao atualizar o expositor.", content = @Content)
-	})
     @PatchMapping("/atualizar/{id}")
     public ResponseEntity<String> atualizarExpositor(@PathVariable Long id,
             @RequestBody UsuarioExpositorEntity expositor) {
@@ -91,11 +69,6 @@ public class ExpositorController {
         }
     }
 
-    @Operation(summary = "Remove um expositor.", description = "Remove um expositor específico pelo ID.")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Expositor removido com sucesso."),
-			@ApiResponse(responseCode = "400", description = "Erro ao remover o expositor.", content = @Content)
-	})
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<String> removerExpositor(@PathVariable Long id) {
         try {
