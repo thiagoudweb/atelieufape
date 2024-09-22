@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.atelieufape.negocio.basico.ProdutoEntity;
-import br.com.atelieufape.negocio.basico.ProdutosCarrinhoEntity;
+import br.com.atelieufape.negocio.basico.ItemCarrinhoCompraEntity;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.basico.CarrinhoEntity;
 import br.com.atelieufape.negocio.basico.CompraEntity;
-import br.com.atelieufape.negocio.cadastro.exception.AtualizarUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
@@ -135,16 +134,43 @@ public class Fachada {
     }
 
     // carrinho
-    public CarrinhoEntity adicionarProdutoCarrinho(Long id, int quantidade)
-            throws CarrinhoException, CadastroProdutoException {
+    public CarrinhoEntity adicionarProdutoCarrinho(Long usuarioId, Long produtoId, int quantidade)
+
+            throws CarrinhoException, CadastroProdutoException, CadastroUsuarioException {
 
         if (quantidade <= 0) {
             throw new CarrinhoException("A quantidade de produtos selecionados é inválida");
         } else {
-            ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
-            ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
-            CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
-            return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
+            ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(produtoId);
+
+            UsuarioEntity usuario = cadastroUsuario.buscarUsuarioPorID(usuarioId);
+
+            CarrinhoEntity carrinho = usuario.getCarrinho();
+
+            if (carrinho == null) {
+                carrinho = new CarrinhoEntity();
+                carrinho.setUsuarioCarrinho(usuario);
+                CarrinhoEntity carrinhoSalvo = cadastroCarrinho.salvarCarrinho(carrinho);
+                usuario.setCarrinho(carrinhoSalvo);
+                cadastroUsuario.atualizarUsuario(usuario);
+            }
+
+            ItemCarrinhoCompraEntity itemExistente = cadastroProdutoCarrinho
+                    .buscarPorProdutoECarrinho(produtoSelecionado.getId(), carrinho.getId());
+
+            if (itemExistente != null) {
+                itemExistente.setQuantidade(itemExistente.getQuantidade() + quantidade);
+                cadastroProdutoCarrinho.atualizarProdutosCarrinho(itemExistente);
+            } else {
+                ItemCarrinhoCompraEntity itemCarrinho = new ItemCarrinhoCompraEntity(produtoSelecionado, quantidade,
+                        produtoSelecionado.getPreco(), carrinho);
+                cadastroProdutoCarrinho.salvarProdutosCarrinho(itemCarrinho);
+                carrinho.adicionarItem(itemCarrinho);
+                cadastroCarrinho.salvarCarrinho(carrinho);
+            }
+
+            return carrinho;
         }
     }
+
 }

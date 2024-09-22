@@ -1,18 +1,23 @@
 package br.com.atelieufape.negocio.contratos;
 
-import br.com.atelieufape.negocio.basico.ProdutosCarrinhoEntity;
 import java.util.List;
 
+import br.com.atelieufape.negocio.basico.ItemCarrinhoCompraEntity;
+import br.com.atelieufape.negocio.cadastro.exception.CarrinhoVazioException;
+import br.com.atelieufape.negocio.cadastro.exception.ItemCarrinhoNaoDisponivelException;
+import br.com.atelieufape.negocio.cadastro.exception.QuantidadeProdutosInvalidaException;
+
 public interface ContratoCadastroProdutosCarrinho {
+    ItemCarrinhoCompraEntity salvarProdutosCarrinho(ItemCarrinhoCompraEntity item);
 
-	public ProdutosCarrinhoEntity salvarProdutosCarrinho(ProdutosCarrinhoEntity produtos);
+    void deletarProdutosCarrinho(Long id) throws CarrinhoVazioException;
 
-	public void deletarProdutosCarrinho(Long id);
-	
-	public void deletarUnidadeDeProdutos(Long id, int quant);
+    void deletarUnidadeDeProdutos(Long id, int quantRemover) throws QuantidadeProdutosInvalidaException;
 
-	public ProdutosCarrinhoEntity atualizarProdutosCarrinho(ProdutosCarrinhoEntity produtos);
+    ItemCarrinhoCompraEntity atualizarProdutosCarrinho(ItemCarrinhoCompraEntity item)
+            throws ItemCarrinhoNaoDisponivelException;
 
-	public List<ProdutosCarrinhoEntity> listarProdutosCarrinho();
+    List<ItemCarrinhoCompraEntity> listarProdutosCarrinho(Long carrinhoId) throws CarrinhoVazioException;
 
+    ItemCarrinhoCompraEntity buscarPorProdutoECarrinho(Long produtoId, Long carrinhoId);
 }
