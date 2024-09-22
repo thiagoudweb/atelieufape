@@ -1,5 +1,7 @@
 package br.com.atelieufape.comunicacao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import br.com.atelieufape.negocio.basico.CarrinhoEntity;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
+import br.com.atelieufape.negocio.cadastro.exception.AtualizarUsuarioException;
+import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
+import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.UsuarioException;
 import br.com.atelieufape.negocio.fachada.Fachada;
 
@@ -28,9 +31,6 @@ public class UsuarioController {
 	@PostMapping("/cadastrar")
 	public ResponseEntity<?> cadastrarUsuario(@RequestBody UsuarioEntity usuario) {
 		try {
-			CarrinhoEntity carrinho = new CarrinhoEntity();
-			usuario.setCarrinho(carrinho);
-
 			fachada.cadastrarUsuario(usuario);
 			return ResponseEntity.ok("Usuário cadastrado com sucesso!");
 		} catch (UsuarioException e) {

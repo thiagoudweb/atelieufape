@@ -1,12 +1,13 @@
 package br.com.atelieufape.dados;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
 import java.util.Optional;
 
-import br.com.atelieufape.negocio.basico.ItemCarrinhoCompraEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ProdutoCarrinhoDados extends JpaRepository<ItemCarrinhoCompraEntity, Long> {
-    Optional<ItemCarrinhoCompraEntity> findByProdutoIdAndCarrinhoId(Long produtoId, Long carrinhoId);
-    List<ItemCarrinhoCompraEntity> findByCarrinhoId(Long carrinhoId);
+import br.com.atelieufape.negocio.basico.ProdutosCarrinhoEntity;
+@Repository
+public interface ProdutoCarrinhoDados extends JpaRepository<ProdutosCarrinhoEntity, Long> {
+	
+//	Optional<ProdutosCarrinhoEntity> buscarPorId(Long id);
 }
