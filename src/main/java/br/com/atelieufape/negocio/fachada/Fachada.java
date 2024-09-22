@@ -1,6 +1,7 @@
 package br.com.atelieufape.negocio.fachada;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.basico.CarrinhoEntity;
 import br.com.atelieufape.negocio.basico.CompraEntity;
-import br.com.atelieufape.negocio.cadastro.exception.AtualizarUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
@@ -26,125 +26,138 @@ import br.com.atelieufape.negocio.contratos.ContratoCadastroUsuario;
 @Service
 public class Fachada {
 
-    @Autowired
-    private ContratoCadastroUsuario cadastroUsuario;
+	@Autowired
+	private ContratoCadastroUsuario cadastroUsuario;
 
-    @Autowired
-    private ContratoCadastroExpositor cadastroExpositor;
-    
-    @Autowired
-    private ContratoCadastroProduto cadastroProduto;
+	@Autowired
+	private ContratoCadastroExpositor cadastroExpositor;
 
-    @Autowired
-    private ContratoCadastroCompra cadastroCompra;
+	@Autowired
+	private ContratoCadastroProduto cadastroProduto;
 
-    @Autowired
-    private ContratoCadastroCarrinho cadastroCarrinho;
+	@Autowired
+	private ContratoCadastroCompra cadastroCompra;
 
-    @Autowired
-    private ContratoCadastroProdutosCarrinho cadastroProdutoCarrinho;
+	@Autowired
+	private ContratoCadastroCarrinho cadastroCarrinho;
 
-    // usuario
-    public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
-        return this.cadastroUsuario.cadastrarUsuario(usuario);
-    }
+	@Autowired
+	private ContratoCadastroProdutosCarrinho cadastroProdutoCarrinho;
 
-    public void removerUsuarioPorID(Long id ) throws CadastroUsuarioException{
-        this.cadastroUsuario.deletarUsuario(id);
-    }
+	// usuario
+	public UsuarioEntity cadastrarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
+		return this.cadastroUsuario.cadastrarUsuario(usuario);
+	}
 
-    public UsuarioEntity atualizarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
-        return this.cadastroUsuario.atualizarUsuario(usuario);
-    }
+	public void removerUsuarioPorID(Long id) throws CadastroUsuarioException {
+		this.cadastroUsuario.deletarUsuario(id);
+	}
 
-    public List<UsuarioEntity> listarUsuarios() {
-        return this.cadastroUsuario.listarUsuarios();
-    }
+	public UsuarioEntity atualizarUsuario(UsuarioEntity usuario) throws CadastroUsuarioException {
+		return this.cadastroUsuario.atualizarUsuario(usuario);
+	}
 
-    public UsuarioEntity buscarUsuarioPorID(Long id) throws CadastroUsuarioException {
-        return this.cadastroUsuario.buscarUsuarioPorID(id);
-    }
+	public List<UsuarioEntity> listarUsuarios() {
+		return this.cadastroUsuario.listarUsuarios();
+	}
 
-    // Expositor
-    public UsuarioExpositorEntity cadastrarExpositor(UsuarioExpositorEntity expositor)
-            throws CadastroExpositorException {
-        return this.cadastroExpositor.cadastrarExpositor(expositor);
-    }
+	public UsuarioEntity buscarUsuarioPorID(Long id) throws CadastroUsuarioException {
+		return this.cadastroUsuario.buscarUsuarioPorID(id);
+	}
 
-    public void removerExpositor(UsuarioExpositorEntity expositor) {
-        this.cadastroExpositor.removerExpositor(expositor);
-    }
+	// Expositor
+	public UsuarioExpositorEntity cadastrarExpositor(UsuarioExpositorEntity expositor)
+			throws CadastroExpositorException {
+		return this.cadastroExpositor.cadastrarExpositor(expositor);
+	}
 
-    public UsuarioExpositorEntity atualizarExpositor(UsuarioExpositorEntity expositor)
-            throws CadastroExpositorException {
-        return this.cadastroExpositor.atualizarExpositor(expositor);
-    }
+	public void removerExpositor(UsuarioExpositorEntity expositor) {
+		this.cadastroExpositor.removerExpositor(expositor);
+	}
 
-    public List<UsuarioExpositorEntity> listarExpositores() {
-        return this.cadastroExpositor.listarExpositores();
-    }
+	public UsuarioExpositorEntity atualizarExpositor(UsuarioExpositorEntity expositor)
+			throws CadastroExpositorException {
+		return this.cadastroExpositor.atualizarExpositor(expositor);
+	}
 
-    public UsuarioExpositorEntity buscarUsuarioExpositorPorID(Long id) throws CadastroExpositorException {
-        return this.cadastroExpositor.buscarUsuarioExpositorPorID(id);
-    }
+	public List<UsuarioExpositorEntity> listarExpositores() {
+		return this.cadastroExpositor.listarExpositores();
+	}
 
-    // produto
-    public ProdutoEntity cadastrarProduto(ProdutoEntity produto) throws CadastroProdutoException {
-        return this.cadastroProduto.cadastrarProduto(produto);
-    }
+	public UsuarioExpositorEntity buscarUsuarioExpositorPorID(Long id) throws CadastroExpositorException {
+		return this.cadastroExpositor.buscarUsuarioExpositorPorID(id);
+	}
 
-    public ProdutoEntity buscarProdutoPorID(Long id) throws CadastroProdutoException {
-        return this.cadastroProduto.buscarProdutoPorId(id);
-    }
+	// produto
+	public ProdutoEntity cadastrarProduto(ProdutoEntity produto) throws CadastroProdutoException {
+		return this.cadastroProduto.cadastrarProduto(produto);
+	}
 
-    public ProdutoEntity buscarProdutoPorNome(String nome) throws CadastroProdutoException {
-        return this.cadastroProduto.buscarProdutoPorNome(nome);
-    }
+	public ProdutoEntity buscarProdutoPorID(Long id) throws CadastroProdutoException {
+		return this.cadastroProduto.buscarProdutoPorId(id);
+	}
 
-    public List<ProdutoEntity> listarProdutos() throws CadastroProdutoException {
-        return this.cadastroProduto.listarProdutos();
-    }
+	public ProdutoEntity buscarProdutoPorNome(String nome) throws CadastroProdutoException {
+		return this.cadastroProduto.buscarProdutoPorNome(nome);
+	}
 
-    public ProdutoEntity atualizarProduto(ProdutoEntity produto) throws CadastroProdutoException {
-        return this.cadastroProduto.atualizarProduto(produto);
-    }
+	public List<ProdutoEntity> listarProdutos() throws CadastroProdutoException {
+		return this.cadastroProduto.listarProdutos();
+	}
 
-    public void removerProduto(ProdutoEntity produto) throws CadastroProdutoException {
-        this.cadastroProduto.removerProduto(produto);
-    }
+	public ProdutoEntity atualizarProduto(ProdutoEntity produto) throws CadastroProdutoException {
+		return this.cadastroProduto.atualizarProduto(produto);
+	}
 
-    // compra
-    public CompraEntity cadastrarCompra(CompraEntity compra) {
-        return this.cadastroCompra.cadastrarCompra(compra);
-    }
+	public void removerProduto(ProdutoEntity produto) throws CadastroProdutoException {
+		this.cadastroProduto.removerProduto(produto);
+	}
 
-    public CompraEntity buscarCompraPorID(Long id) {
-        return this.cadastroCompra.buscarCompraPorId(id);
-    }
+	// compra
+	public CompraEntity cadastrarCompra(CompraEntity compra) {
+		return this.cadastroCompra.cadastrarCompra(compra);
+	}
 
-    public List<CompraEntity> listarCompras() {
-        return this.cadastroCompra.listarCompras();
-    }
+	public CompraEntity buscarCompraPorID(Long id) {
+		return this.cadastroCompra.buscarCompraPorId(id);
+	}
 
-    public CompraEntity atualizarCompra(CompraEntity compra) {
-        return this.cadastroCompra.atualizarCompra(compra);
-    }
+	public List<CompraEntity> listarCompras() {
+		return this.cadastroCompra.listarCompras();
+	}
 
-    public void removerCompra(Long id) {
-        this.cadastroCompra.removerCompra(id);
-    }
+	public CompraEntity atualizarCompra(CompraEntity compra) {
+		return this.cadastroCompra.atualizarCompra(compra);
+	}
 
-    // carrinho
-    public CarrinhoEntity adicionarProdutoCarrinho(Long id, int quantidade)
-            throws CarrinhoException, CadastroProdutoException {
+	public void removerCompra(Long id) {
+		this.cadastroCompra.removerCompra(id);
+	}
 
-        if (quantidade <= 0) {
-            throw new CarrinhoException("A quantidade de produtos selecionados é inválida");
-        } else {
-            ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
-            ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
-            CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
-            return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
-        }
-    }
+	// carrinho
+	public CarrinhoEntity adicionarProdutoCarrinho(Long id, int quantidade, Long idUsuario)
+			throws CarrinhoException, CadastroProdutoException {
+
+		if (quantidade <= 0) {
+			throw new CarrinhoException("A quantidade de produtos selecionados é inválida");
+		}
+
+		try {
+
+			CarrinhoEntity veriCarrinhoExistente = cadastroCarrinho.pegarCarrinho(idUsuario);
+
+			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
+			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
+			veriCarrinhoExistente.setProdutosCarrinho(novoProdutoCarrinho);
+			return veriCarrinhoExistente;
+
+		} catch (CarrinhoException e) {
+
+			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
+			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
+			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
+			return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
+		}
+
+	}
 }

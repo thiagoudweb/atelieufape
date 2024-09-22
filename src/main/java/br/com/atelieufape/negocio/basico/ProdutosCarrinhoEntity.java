@@ -8,7 +8,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
+//Autor: Thiago Silva
+//Essa classe é responsável moldar a entidade ( tabela do produto do carrinho ) no banco de dados. Ela consiste em organizar, alem do produto, sua quantidade, a soma do valor final para finalizar compra, a quantidade dos itens que o usuario selecionou ( pra evitar duplicidade no codigo ). ela concentra todas as informações do produto, alem do produto em sí!
 @Entity
 @Table(name = "PRODUTOS_CARRINHO")
 public class ProdutosCarrinhoEntity {

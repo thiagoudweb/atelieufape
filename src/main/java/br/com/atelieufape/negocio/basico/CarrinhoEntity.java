@@ -12,6 +12,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+//Autor: Thiago Silva
+// Essa classe é responsável moldar a entidade ( tabela do carrinho ) no banco de dados, visando a persistência do carrinho do(s) usuario(s).
 @Entity
 @Table(name = "TABELA_CARRINHO")
 public class CarrinhoEntity {
@@ -36,11 +38,11 @@ public class CarrinhoEntity {
 		this.usuarioCarrinho = usuarioCarrinho;
 		this.produtosCarrinho = produtosCarrinho;
 	}
-	
+
 	// construtor para iniciar objeto //
 	public CarrinhoEntity(ProdutosCarrinhoEntity produtoNovo) {
-		this.produtosCarrinho = new ArrayList<>(); 
-	    this.produtosCarrinho.add(produtoNovo); 
+		this.produtosCarrinho = new ArrayList<>();
+		this.produtosCarrinho.add(produtoNovo);
 	}
 
 	// metodos especiais
@@ -64,8 +66,8 @@ public class CarrinhoEntity {
 		return produtosCarrinho;
 	}
 
-	public void setProdutosCarrinho(List<ProdutosCarrinhoEntity> produtosCarrinho) {
-		this.produtosCarrinho = produtosCarrinho;
+	public void setProdutosCarrinho(ProdutosCarrinhoEntity produtosCarrinho) {
+		this.produtosCarrinho.add(produtosCarrinho);
 	}
 
 	public double getSaldoProdutos() {

@@ -10,7 +10,8 @@ import br.com.atelieufape.dados.UsuarioDados;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroUsuario;
-
+// Autor: Thiago Silva
+// Essa classe é responsável por salvar o cadastro inicial do usuário. Tem suas lógicas básicas de validação.
 @Service
 public class CadastroUsuario implements ContratoCadastroUsuario {
 
