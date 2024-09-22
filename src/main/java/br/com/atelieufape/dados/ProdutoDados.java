@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.atelieufape.negocio.basico.ProdutoEntity;
+
+//Autor: Luiza Marques
+//Esta classe é responsável por gerar o repositório onde serão guardados os produtos.
 @Repository
 public interface ProdutoDados extends JpaRepository<ProdutoEntity, Long> {
 	

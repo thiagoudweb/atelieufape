@@ -26,6 +26,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+//Autor: Luiza Marques
+//Esta classe é responsável pela definição dos métodos que podem ser usados com produto.
 @Controller
 @CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/produto")
