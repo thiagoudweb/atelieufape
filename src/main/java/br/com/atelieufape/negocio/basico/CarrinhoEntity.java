@@ -1,79 +1,75 @@
 package br.com.atelieufape.negocio.basico;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "TABELA_CARRINHO")
 public class CarrinhoEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@ManyToOne
-	private UsuarioEntity usuarioCarrinho;
-	@OneToMany(mappedBy = "carrinhoUsuario", cascade = CascadeType.ALL)
-	private List<ProdutosCarrinhoEntity> produtosCarrinho;
-	private double saldoProdutos;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	// construtor padrão //
-	public CarrinhoEntity() {
-	}
+    // Relação com UsuarioEntity
+    @ManyToOne
+    @JoinColumn(name = "usuario_carrinho_id")
+    @JsonBackReference
+    private UsuarioEntity usuarioCarrinho;
 
-	// construtor com atributis//
-	public CarrinhoEntity(Long id, UsuarioEntity usuarioCarrinho, List<ProdutosCarrinhoEntity> produtosCarrinho) {
+    // Relação com ItemCarrinhoCompraEntity
+    @OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL)
+    private List<ItemCarrinhoCompraEntity> itensCarrinho;
 
-		this.id = id;
-		this.usuarioCarrinho = usuarioCarrinho;
-		this.produtosCarrinho = produtosCarrinho;
-	}
-	
-	// construtor para iniciar objeto //
-	public CarrinhoEntity(ProdutosCarrinhoEntity produtoNovo) {
-		this.produtosCarrinho = new ArrayList<>(); 
-	    this.produtosCarrinho.add(produtoNovo); 
-	}
+    private double saldoProdutos;
 
-	// metodos especiais
-	public Long getId() {
-		return id;
-	}
+    // Construtor padrão
+    public CarrinhoEntity() {
+        this.itensCarrinho = new ArrayList<>();
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    // Construtor com atributos
+    public CarrinhoEntity(Long id, UsuarioEntity usuarioCarrinho, List<ItemCarrinhoCompraEntity> itensCarrinho) {
+        this.id = id;
+        this.usuarioCarrinho = usuarioCarrinho;
+        this.itensCarrinho = itensCarrinho;
+    }
 
-	public UsuarioEntity getUsuarioCarrinho() {
-		return usuarioCarrinho;
-	}
+    // Getters e Setters
 
-	public void setUsuarioCarrinho(UsuarioEntity usuarioCarrinho) {
-		this.usuarioCarrinho = usuarioCarrinho;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public List<ProdutosCarrinhoEntity> getProdutosCarrinho() {
-		return produtosCarrinho;
-	}
+    public UsuarioEntity getUsuarioCarrinho() {
+        return usuarioCarrinho;
+    }
 
-	public void setProdutosCarrinho(List<ProdutosCarrinhoEntity> produtosCarrinho) {
-		this.produtosCarrinho = produtosCarrinho;
-	}
+    public void setUsuarioCarrinho(UsuarioEntity usuarioCarrinho) {
+        this.usuarioCarrinho = usuarioCarrinho;
+    }
 
-	public double getSaldoProdutos() {
-		return saldoProdutos;
-	}
+    public List<ItemCarrinhoCompraEntity> getItensCarrinho() {
+        return itensCarrinho;
+    }
 
-	public void setSaldoProdutos(double saldoProdutos) {
-		this.saldoProdutos = saldoProdutos;
-	}
+    public void setItensCarrinho(List<ItemCarrinhoCompraEntity> itensCarrinho) {
+        this.itensCarrinho = itensCarrinho;
+    }
 
+    public double getSaldoProdutos() {
+        return saldoProdutos;
+    }
+
+    public void setSaldoProdutos(double saldoProdutos) {
+        this.saldoProdutos = saldoProdutos;
+    }
+
+    public void adicionarItem(ItemCarrinhoCompraEntity item) {
+        this.itensCarrinho.add(item);
+        item.setCarrinho(this);
+    }
 }

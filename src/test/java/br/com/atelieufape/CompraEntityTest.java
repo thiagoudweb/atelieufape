@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import br.com.atelieufape.negocio.basico.CompraEntity;
 import br.com.atelieufape.negocio.basico.ProdutoEntity;
+import br.com.atelieufape.negocio.basico.ItemCarrinhoCompraEntity;
 import br.com.atelieufape.negocio.basico.StatusCompra;
-import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
+import br.com.atelieufape.negocio.basico.UsuarioEntity;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,21 +16,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CompraEntityTest {
 
-    private UsuarioExpositorEntity usuarioExpositor;
+    private UsuarioEntity cliente;
     private ProdutoEntity produto;
-    private List<ProdutoEntity> produtos;
+    private ItemCarrinhoCompraEntity itemCompra;
+    private List<ItemCarrinhoCompraEntity> itensCompra;
     private LocalDate dataCompra;
     private double valorTotal;
     private StatusCompra status;
 
     @BeforeEach
     public void setUp() {
-        // Criando instâncias reais para os testes
-        usuarioExpositor = new UsuarioExpositorEntity();
+        cliente = new UsuarioEntity();
+        cliente.setId(1L);
+        cliente.setNome("Cliente Teste");
         produto = new ProdutoEntity();
-        produtos = List.of(produto);
-
-        // Configuração inicial dos dados
+        produto.setId(1L);
+        produto.setNome("Produto Teste");
+        produto.setPreco(59.90);
+        itemCompra = new ItemCarrinhoCompraEntity(produto, 1, produto.getPreco(), null);
+        itensCompra = List.of(itemCompra);
         dataCompra = LocalDate.of(2024, 9, 20);
         valorTotal = 59.90;
         status = StatusCompra.CONCLUIDA;
@@ -38,13 +43,13 @@ public class CompraEntityTest {
     @Test
     public void testCompraEntityConstrutor() {
         // Criando uma nova instância de CompraEntity
-        CompraEntity compra = new CompraEntity(dataCompra, valorTotal, status, usuarioExpositor, produtos);
+        CompraEntity compra = new CompraEntity(dataCompra, valorTotal, status, cliente, itensCompra);
 
         // Verificando os valores
         assertEquals(dataCompra, compra.getDataCompra());
         assertEquals(valorTotal, compra.getValorTotal());
         assertEquals(status, compra.getStatus());
-        assertEquals(usuarioExpositor, compra.getUsuarioExpositor());
-        assertEquals(produtos, compra.getProdutos());
+        assertEquals(cliente, compra.getCliente());
+        assertEquals(itensCompra, compra.getItensCompra());
     }
 }

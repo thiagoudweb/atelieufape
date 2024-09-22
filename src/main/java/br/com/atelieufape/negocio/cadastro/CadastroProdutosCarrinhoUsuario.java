@@ -7,117 +7,96 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.atelieufape.dados.ProdutoCarrinhoDados;
-import br.com.atelieufape.negocio.basico.ProdutosCarrinhoEntity;
+import br.com.atelieufape.negocio.basico.ItemCarrinhoCompraEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CarrinhoVazioException;
 import br.com.atelieufape.negocio.cadastro.exception.ItemCarrinhoNaoDisponivelException;
 import br.com.atelieufape.negocio.cadastro.exception.ProdutoNaoEncontradoException;
 import br.com.atelieufape.negocio.cadastro.exception.QuantidadeProdutosInvalidaException;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroProdutosCarrinho;
 
-//Autor:Thiago Silva 
-//Essa classe é responsável por manter o crud básico e logicas simples de alteração dos produtos dentro do carrinho. O carrinho manterá essa classe e pode utilizar ela para coletar informações finais para finalização da compra, alem da logica de add produtos.
-
 @Service
 public class CadastroProdutosCarrinhoUsuario implements ContratoCadastroProdutosCarrinho {
 
-	@Autowired
-	private ProdutoCarrinhoDados produtosCarrinho;
+    @Autowired
+    private ProdutoCarrinhoDados produtosCarrinho;
 
-// cadastrar produto. aq tem uma logica simples para não duplicar o produto na tbaela do produtoscarrinhos.
-	@Override
-	public ProdutosCarrinhoEntity salvarProdutosCarrinho(ProdutosCarrinhoEntity produtos) {
-		Optional<ProdutosCarrinhoEntity> produtoJaSalvo = produtosCarrinho.findById(produtos.getId());
-		if (produtoJaSalvo.isPresent()) {
+    @Override
+    public ItemCarrinhoCompraEntity salvarProdutosCarrinho(ItemCarrinhoCompraEntity item) {
+        Optional<ItemCarrinhoCompraEntity> itemExistente = produtosCarrinho.findByProdutoIdAndCarrinhoId(
+                item.getProduto().getId(), item.getCarrinho().getId());
 
-			ProdutosCarrinhoEntity produtoAtualizado = produtoJaSalvo.get();
-			produtoAtualizado.setQuantidadeDeProdutos(
-					produtoAtualizado.getQuantidadeDeProdutos() + produtos.getQuantidadeDeProdutos());
-			return produtosCarrinho.save(produtoAtualizado);
-		}
+        if (itemExistente.isPresent()) {
+            ItemCarrinhoCompraEntity itemAtualizado = itemExistente.get();
+            itemAtualizado.setQuantidade(
+                    itemAtualizado.getQuantidade() + item.getQuantidade());
+            return produtosCarrinho.save(itemAtualizado);
+        } else {
+            item.setPrecoUnitario(item.getProduto().getPreco());
+            return produtosCarrinho.save(item);
+        }
+    }
 
-		else {
-			return produtosCarrinho.save(produtos);
-		}
-	}
+    @Override
+    public void deletarProdutosCarrinho(Long id) throws CarrinhoVazioException {
 
-	// deletar produto: aqui eu deleto o produto de vez, ao invés de apagar unidade
-	// por unidade.
-	@Override
-	public void deletarProdutosCarrinho(Long id) throws CarrinhoVazioException {
+        Optional<ItemCarrinhoCompraEntity> itemBd = produtosCarrinho.findById(id);
+        if (itemBd.isPresent() && itemBd.get().getCarrinho() != null) {
+            produtosCarrinho.deleteById(id);
+        } else {
+            throw new CarrinhoVazioException("Produto não está no carrinho");
+        }
+    }
 
-		Optional<ProdutosCarrinhoEntity> produtoBd = produtosCarrinho.findById(id);
-		if (produtoBd.isPresent()) {
+    @Override
+    public void deletarUnidadeDeProdutos(Long id, int quantRemover) throws QuantidadeProdutosInvalidaException {
 
-			produtosCarrinho.deleteById(id);
-		}
+        Optional<ItemCarrinhoCompraEntity> itemBd = produtosCarrinho.findById(id);
 
-		else {
-			throw new CarrinhoVazioException("Produto não não esta no carrinho");
-		}
-	}
+        if (itemBd.isPresent() && itemBd.get().getCarrinho() != null) {
 
-	// Aqui eu deleto o produto por unidades, pois, dentro do carrinho, contem um
-	// array com um vários objetos e cada um deles é um produto e seus atributos
-	// especificos.
-	@Override
-	public void deletarUnidadeDeProdutos(Long id, int quantRemover) throws QuantidadeProdutosInvalidaException {
+            ItemCarrinhoCompraEntity itemAtualizado = itemBd.get();
+            int quantidadeAtual = itemAtualizado.getQuantidade();
 
-		Optional<ProdutosCarrinhoEntity> produtoBd = produtosCarrinho.findById(id);
+            if (quantRemover <= 0) {
+                throw new QuantidadeProdutosInvalidaException("Quantidade inválida!");
+            } else if (quantRemover >= quantidadeAtual) {
+                deletarProdutosCarrinho(id);
+            } else {
+                itemAtualizado.setQuantidade(quantidadeAtual - quantRemover);
+                produtosCarrinho.save(itemAtualizado);
+            }
+        } else {
+            throw new ProdutoNaoEncontradoException("Produto não encontrado no carrinho");
+        }
 
-		if (produtoBd.isPresent()) {
+    }
 
-			ProdutosCarrinhoEntity produtoAtualizado = produtoBd.get();
-			int quantidadeAtual = produtoAtualizado.getQuantidadeDeProdutos();
+    @Override
+    public ItemCarrinhoCompraEntity atualizarProdutosCarrinho(ItemCarrinhoCompraEntity item)
+            throws ItemCarrinhoNaoDisponivelException {
 
-			if (quantRemover < 0) {
+        Optional<ItemCarrinhoCompraEntity> itemBd = produtosCarrinho.findById(item.getId());
+        if (itemBd.isPresent() && itemBd.get().getCarrinho() != null) {
+            return produtosCarrinho.save(item);
+        } else {
+            throw new ItemCarrinhoNaoDisponivelException("Item selecionado não disponível no carrinho");
+        }
+    }
 
-				throw new QuantidadeProdutosInvalidaException("Quantidade inválida!");
+    @Override
+    public List<ItemCarrinhoCompraEntity> listarProdutosCarrinho(Long carrinhoId) throws CarrinhoVazioException {
 
-			} else if (quantRemover == quantidadeAtual) {
-				deletarProdutosCarrinho(id);
+        List<ItemCarrinhoCompraEntity> listaProdutos = produtosCarrinho.findByCarrinhoId(carrinhoId);
+        if (listaProdutos.isEmpty()) {
+            throw new CarrinhoVazioException("O seu carrinho está vazio");
+        } else {
+            return listaProdutos;
+        }
+    }
 
-			}
-
-			else {
-				if (quantidadeAtual > quantRemover) {
-
-					produtoAtualizado.setQuantidadeDeProdutos(quantidadeAtual - quantRemover);
-					produtosCarrinho.save(produtoAtualizado);
-				} else {
-					throw new QuantidadeProdutosInvalidaException("Quantidade tem que ser maior que a atual");
-				}
-
-			}
-		} else {
-			throw new ProdutoNaoEncontradoException("Produto não encontrado");
-		}
-
-	}
-
-	@Override
-	public ProdutosCarrinhoEntity atualizarProdutosCarrinho(ProdutosCarrinhoEntity produtos)
-			throws ItemCarrinhoNaoDisponivelException {
-
-		Optional<ProdutosCarrinhoEntity> produtoBd = produtosCarrinho.findById(produtos.getId());
-		if (produtoBd.isPresent()) {
-
-			return produtosCarrinho.save(produtos);
-		} else {
-			throw new ItemCarrinhoNaoDisponivelException("Item selecionado não disponivel");
-		}
-	}
-
-	@Override
-	public List<ProdutosCarrinhoEntity> listarProdutosCarrinho() throws CarrinhoVazioException {
-
-		List<ProdutosCarrinhoEntity> listaProdutos = produtosCarrinho.findAll();
-		if (listaProdutos.isEmpty()) {
-			throw new CarrinhoVazioException(" O seu carrinho está vazio");
-		} else {
-
-			return listaProdutos;
-
-		}
-	}
-
+    @Override
+    public ItemCarrinhoCompraEntity buscarPorProdutoECarrinho(Long produtoId, Long carrinhoId) {
+        Optional<ItemCarrinhoCompraEntity> item = produtosCarrinho.findByProdutoIdAndCarrinhoId(produtoId, carrinhoId);
+        return item.orElse(null);
+    }
 }

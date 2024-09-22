@@ -2,6 +2,7 @@ package br.com.atelieufape.negocio.basico;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,41 +15,37 @@ public class CompraEntity {
 
     private LocalDate dataCompra;
     private double valorTotal;
-    
+
     @Enumerated(EnumType.STRING)
     private StatusCompra status;
 
+    // Relação com UsuarioEntity (cliente)
     @ManyToOne
-    @JoinColumn(name = "usuario_expositor_id", nullable = false)
-    private UsuarioExpositorEntity usuarioExpositor;
+    @JoinColumn(name = "usuario_cliente_id", nullable = false)
+    private UsuarioEntity cliente;
 
-    @ManyToMany
-    @JoinTable(
-        name = "compra_produto",
-        joinColumns = @JoinColumn(name = "compra_id"),
-        inverseJoinColumns = @JoinColumn(name = "produto_id")
-    )
-    private List<ProdutoEntity> produtos;
+    // Relação com ItemCarrinhoCompraEntity
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
+    private List<ItemCarrinhoCompraEntity> itensCompra;
 
+    // Construtor padrão
     public CompraEntity() {
+        this.itensCompra = new ArrayList<>();
     }
 
-    // Construtor
-    public CompraEntity(LocalDate dataCompra, double valorTotal, StatusCompra status, UsuarioExpositorEntity usuarioExpositor, List<ProdutoEntity> produtos) {
+    // Construtor com atributos
+    public CompraEntity(LocalDate dataCompra, double valorTotal, StatusCompra status, UsuarioEntity cliente, List<ItemCarrinhoCompraEntity> itensCompra) {
         this.dataCompra = dataCompra;
         this.valorTotal = valorTotal;
         this.status = status;
-        this.usuarioExpositor = usuarioExpositor;
-        this.produtos = produtos;
+        this.cliente = cliente;
+        this.itensCompra = itensCompra;
     }
 
     // Getters e Setters
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public LocalDate getDataCompra() {
@@ -75,19 +72,25 @@ public class CompraEntity {
         this.status = status;
     }
 
-    public UsuarioExpositorEntity getUsuarioExpositor() {
-        return usuarioExpositor;
+    public UsuarioEntity getCliente() {
+        return cliente;
     }
 
-    public void setUsuarioExpositor(UsuarioExpositorEntity usuarioExpositor) {
-        this.usuarioExpositor = usuarioExpositor;
+    public void setCliente(UsuarioEntity cliente) {
+        this.cliente = cliente;
     }
 
-    public List<ProdutoEntity> getProdutos() {
-        return produtos;
+    public List<ItemCarrinhoCompraEntity> getItensCompra() {
+        return itensCompra;
     }
 
-    public void setProdutos(List<ProdutoEntity> produtos) {
-        this.produtos = produtos;
+    public void setItensCompra(List<ItemCarrinhoCompraEntity> itensCompra) {
+        this.itensCompra = itensCompra;
+    }
+
+    // Método para adicionar item à compra
+    public void adicionarItem(ItemCarrinhoCompraEntity item) {
+        this.itensCompra.add(item);
+        item.setCompra(this);
     }
 }
