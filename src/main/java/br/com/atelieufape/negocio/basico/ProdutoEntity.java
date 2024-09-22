@@ -2,6 +2,8 @@ package br.com.atelieufape.negocio.basico;
 
 import jakarta.persistence.*;
 
+//Autor: Luiza Marques
+//Esta classe é responsável pela definição de Produto, com seus atributos e métodos getters e setters.
 @Entity
 @Table(name = "TABELA_PRODUTO")
 public class ProdutoEntity {
@@ -90,7 +92,7 @@ public class ProdutoEntity {
 		return categoria;
 	}
 
-	// fizar a categoria para deixar o usuario limitado a 3 opç~çoes
+	//setter customizado para verificar se a categoria é válida
 	public void setCategoria(String categoria) {
 		if (Categoria.CATEGORIAS_PERMITIDAS.contains(categoria)) {
 			this.categoria = categoria;
@@ -139,7 +141,6 @@ public class ProdutoEntity {
 		this.expositor = expositor;
 	}
 
-	// método tostring
 	@Override
 	public String toString() {
 		return "ProdutoEntity [id=" + id + ", nome=" + nome + ", preco=" + preco + ", categoria=" + categoria
