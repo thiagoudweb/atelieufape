@@ -1,57 +1,70 @@
 package br.com.atelieufape.negocio.basico;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TABELA_PRODUTO")
 public class ProdutoEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	// atributos
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String nome;
+	@Column(nullable = false)
+	private String nome;
 
-    @Column(nullable = false)
-    private double preco;
+	@Column(nullable = false)
+	private double preco;
 
-    @Column(nullable = false)
-    private String categoria;
+	@Column(nullable = false)
+	private String categoria;
 
-    @Column(nullable = false)
-    private String descricao;
+	@Column(nullable = false)
+	private String descricao;
 
-    @Column(nullable = false)
-    private String condicao;
+	@Column(nullable = false)
+	private String condicao;
 
-    @Column(nullable = false)
-    private String marca;
+	@Column(nullable = false)
+	private String marca;
 
-    @Column(nullable = false)
-    private int quantidade;
+	@Column(nullable = false)
+	private int quantidade;
 
-    @ManyToOne
-    @JoinColumn(name = "expositor_id", nullable = false)
-    private UsuarioExpositorEntity expositor;
+	@ManyToOne
+	@JoinColumn(name = "expositor_id", nullable = false)
+	private UsuarioExpositorEntity expositor;
+	// o produto aq n vai precisar saber onde ele ta senddo colocado no carrinho.
+	// relacionamento unidirecional..
+	// @OneToOne
+	// private ProdutosCarrinhoEntity produtoNoCarrinho;
 
-    // Construtor padrão
-    public ProdutoEntity() {
-    }
+	// construtor padrão
+	public ProdutoEntity() {
+	}
 
-    // Construtor com atributos
-    public ProdutoEntity(Long id, String nome, double preco, String categoria, String descricao, String condicao,
-            String marca, int quantidade, UsuarioExpositorEntity expositor) {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
-        this.categoria = categoria;
-        this.descricao = descricao;
-        this.condicao = condicao;
-        this.marca = marca;
-        this.quantidade = quantidade;
-        this.expositor = expositor;
-    }
+	// construtor com todos os atributos
+	public ProdutoEntity(Long id, String nome, double preco, String categoria, String descricao, String condicao,
+			String marca, int quantidade, ProdutosCarrinhoEntity produtosNoCarrinho) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+		this.categoria = categoria;
+		this.descricao = descricao;
+		this.condicao = condicao;
+		this.marca = marca;
+		this.quantidade = quantidade;
+		// this.produtoNoCarrinho = produtosNoCarrinho;
+	}
 
 	// getters e setters
 	public Long getId() {
