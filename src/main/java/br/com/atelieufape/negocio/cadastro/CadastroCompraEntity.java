@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Autor: Tiago José
+// Essa classe é responsável pela implementação das operações de cadastro, busca, atualização e remoção de compras.
+// Ela implementa o contrato definido pela interface `ContratoCadastroCompra` e se comunica com a camada de persistência,
 @Service
 public class CadastroCompraEntity implements ContratoCadastroCompra {
 
@@ -23,7 +26,7 @@ public class CadastroCompraEntity implements ContratoCadastroCompra {
     @Override
     public CompraEntity buscarCompraPorId(Long id) {
         return compraDados.findById(id)
-            .orElseThrow(() -> new CompraNaoEncontradaException("Compra não encontrada!"));
+                .orElseThrow(() -> new CompraNaoEncontradaException("Compra não encontrada!"));
     }
 
     @Override

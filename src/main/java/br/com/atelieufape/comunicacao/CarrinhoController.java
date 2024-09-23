@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import br.com.atelieufape.negocio.basico.ProdutoEntity;
 import br.com.atelieufape.negocio.basico.ProdutosCarrinhoEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CarrinhoException;
@@ -52,20 +50,21 @@ public class CarrinhoController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+
 	@GetMapping("/listarProdutosCarrinho/{id}")
 	public ResponseEntity<?> listarProdutos(@PathVariable Long id) {
-	    try {
-	        List<ProdutosCarrinhoEntity> produtos = fachada.listarProdutosCarrinho(id);
-	        
-	        if (produtos.isEmpty()) {
-	            return ResponseEntity.ok("O carrinho está vazio.");
-	        }
+		try {
+			List<ProdutosCarrinhoEntity> produtos = fachada.listarProdutosCarrinho(id);
 
-	        return ResponseEntity.ok(produtos);
+			if (produtos.isEmpty()) {
+				return ResponseEntity.ok("O carrinho está vazio.");
+			}
 
-	    } catch (CarrinhoNaoEncontradoException e) {
-	        return ResponseEntity.badRequest().body(e.getMessage());
-	    }
+			return ResponseEntity.ok(produtos);
+
+		} catch (CarrinhoNaoEncontradoException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 
 }

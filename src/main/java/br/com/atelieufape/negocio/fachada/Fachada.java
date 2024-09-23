@@ -1,13 +1,12 @@
 package br.com.atelieufape.negocio.fachada;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.com.atelieufape.negocio.basico.ProdutoEntity;
 import br.com.atelieufape.negocio.basico.ProdutosCarrinhoEntity;
+import br.com.atelieufape.negocio.basico.StatusCompra;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.basico.CarrinhoEntity;
@@ -17,6 +16,7 @@ import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.CarrinhoException;
 import br.com.atelieufape.negocio.cadastro.exception.CarrinhoNaoEncontradoException;
+import br.com.atelieufape.negocio.cadastro.exception.CompraNaoPodeSerFinalizadaException;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroCarrinho;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroCompra;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroExpositor;
@@ -115,6 +115,35 @@ public class Fachada {
 	}
 
 	// compra
+
+	public CompraEntity finalizarCompra(Long idCarrinho, Long idUsuario) throws CompraNaoPodeSerFinalizadaException {
+
+		CarrinhoEntity carrinhoExistente;
+		try {
+			carrinhoExistente = cadastroCarrinho.pegarCarrinho(idUsuario);
+		} catch (CarrinhoException e) {
+			carrinhoExistente = new CarrinhoEntity();
+			UsuarioEntity usuario = cadastroUsuario.buscarUsuarioPorID(idUsuario);
+			if (usuario == null) {
+				throw new CompraNaoPodeSerFinalizadaException("Usuário não encontrado.");
+			}
+			carrinhoExistente.setUsuarioCarrinho(usuario);
+			carrinhoExistente = cadastroCarrinho.salvarCarrinho(carrinhoExistente);
+		}
+
+		if (carrinhoExistente.getProdutosCarrinho() == null || carrinhoExistente.getProdutosCarrinho().isEmpty()) {
+			throw new CompraNaoPodeSerFinalizadaException("O carrinho está vazio.");
+		}
+
+		CompraEntity compra = new CompraEntity();
+		compra.setCarrinho(carrinhoExistente);
+		compra.setDataCompra(LocalDate.now());
+		compra.setValorTotal(compra.calcularValorTotal());
+		compra.setStatus(StatusCompra.CONCLUIDA);
+
+		return cadastroCompra.cadastrarCompra(compra);
+	}
+
 	public CompraEntity cadastrarCompra(CompraEntity compra) {
 		return this.cadastroCompra.cadastrarCompra(compra);
 	}
@@ -178,7 +207,7 @@ public class Fachada {
 			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
 			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
 			UsuarioEntity usuarioCadastrado = cadastroUsuario.buscarUsuarioPorID(idUsuario);
-			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho,usuarioCadastrado);
+			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho, usuarioCadastrado);
 			return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
 		}
 
@@ -195,15 +224,15 @@ public class Fachada {
 		}
 
 	}
-	
+
 	public List<ProdutosCarrinhoEntity> listarProdutosCarrinho(Long id) throws CarrinhoNaoEncontradoException {
-	    CarrinhoEntity veriCarrinhoExistente = cadastroCarrinho.pegarCarrinho(id);
+		CarrinhoEntity veriCarrinhoExistente = cadastroCarrinho.pegarCarrinho(id);
 
-	    if (veriCarrinhoExistente == null) {
-	        throw new CarrinhoNaoEncontradoException("Carrinho não encontrado para o ID do usuário: " + id);
-	    }
+		if (veriCarrinhoExistente == null) {
+			throw new CarrinhoNaoEncontradoException("Carrinho não encontrado para o ID do usuário: " + id);
+		}
 
-	    return veriCarrinhoExistente.getProdutosCarrinho();
+		return veriCarrinhoExistente.getProdutosCarrinho();
 	}
 
 }
