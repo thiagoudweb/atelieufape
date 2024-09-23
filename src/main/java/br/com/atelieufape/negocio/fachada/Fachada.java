@@ -11,7 +11,6 @@ import br.com.atelieufape.negocio.basico.UsuarioEntity;
 import br.com.atelieufape.negocio.basico.UsuarioExpositorEntity;
 import br.com.atelieufape.negocio.basico.CarrinhoEntity;
 import br.com.atelieufape.negocio.basico.CompraEntity;
-import br.com.atelieufape.negocio.cadastro.exception.AtualizarUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
@@ -70,6 +69,10 @@ public class Fachada {
             throws CadastroExpositorException {
         return this.cadastroExpositor.cadastrarExpositor(expositor);
     }
+    
+    public ProdutoEntity cadastrarProduto(ProdutoEntity produto) throws CadastroProdutoException {
+        return this.cadastroProduto.cadastrarProduto(produto);
+    }
 
     public void removerExpositor(UsuarioExpositorEntity expositor) {
         this.cadastroExpositor.removerExpositor(expositor);
@@ -89,10 +92,6 @@ public class Fachada {
     }
 
     // produto
-    public ProdutoEntity cadastrarProduto(ProdutoEntity produto) throws CadastroProdutoException {
-        return this.cadastroProduto.cadastrarProduto(produto);
-    }
-
     public ProdutoEntity buscarProdutoPorID(Long id) throws CadastroProdutoException {
         return this.cadastroProduto.buscarProdutoPorId(id);
     }
