@@ -36,9 +36,8 @@ public class ProdutoEntity {
 
 	@Column(nullable = false)
 	private int quantidade;
-//  o produto aq n vai precisar saber onde ele ta senddo colocado no carrinho. relacionamento unidirecional..
-//	@OneToOne
-//	private ProdutosCarrinhoEntity produtoNoCarrinho;
+	
+	
 
 	// construtor padrão
 	public ProdutoEntity() {

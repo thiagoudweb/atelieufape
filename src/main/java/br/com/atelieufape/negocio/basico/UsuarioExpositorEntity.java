@@ -23,7 +23,8 @@ public class UsuarioExpositorEntity extends UsuarioAbstract {
 	private String nomeLoja;
 	private String emailLoja;
 	private double saldoLoja;
-
+	
+	
 	// metodos especiais //
 
 	public String getNomeLoja() {

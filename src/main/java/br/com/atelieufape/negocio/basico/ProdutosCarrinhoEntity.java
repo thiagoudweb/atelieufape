@@ -32,7 +32,7 @@ public class ProdutosCarrinhoEntity {
 		this.id = id;
 		this.produto = produto;
 		this.quantidadeDeProdutos = quantidadeDeProdutos;
-		this.valorproduto = produto.getPreco();
+		this.valorproduto = produto.getPreco() * quantidadeDeProdutos;
 		this.carrinhoUsuario = carrinhoUsuario;
 	}
 

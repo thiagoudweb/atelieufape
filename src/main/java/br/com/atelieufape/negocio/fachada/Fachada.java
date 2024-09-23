@@ -152,7 +152,8 @@ public class Fachada {
 			return veriCarrinhoExistente;
 
 		} catch (CarrinhoException e) {
-
+            
+			// criar um novo carrinho
 			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
 			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
 			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
