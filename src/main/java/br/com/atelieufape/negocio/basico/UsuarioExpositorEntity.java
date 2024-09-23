@@ -32,7 +32,7 @@ public class UsuarioExpositorEntity extends UsuarioAbstract {
 	private String nomeLoja;
 	private String emailLoja;
 	private double saldoLoja;
-	@OneToMany(mappedBy = "usuarioExpositor", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<ProdutoEntity> produtosExpositor;
 
 	// metodos especiais //
