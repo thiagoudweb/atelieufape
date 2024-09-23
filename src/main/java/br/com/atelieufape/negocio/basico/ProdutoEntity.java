@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,6 +41,8 @@ public class ProdutoEntity {
 	
 	@ManyToOne
 	private UsuarioExpositorEntity expositor;
+	@OneToOne
+	private ProdutosCarrinhoEntity produtosCarrinho;
 	
 
 	// construtor padrão

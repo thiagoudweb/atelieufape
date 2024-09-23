@@ -178,8 +178,7 @@ public class Fachada {
 			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
 			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
 			UsuarioEntity usuarioCadastrado = cadastroUsuario.buscarUsuarioPorID(idUsuario);
-			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
-			salvarCarrinho.setUsuarioCarrinho(usuarioCadastrado);
+			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho,usuarioCadastrado);
 			return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
 		}
 

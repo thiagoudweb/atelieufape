@@ -17,7 +17,7 @@ public class ProdutosCarrinhoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne
+	@OneToOne
 	private ProdutoEntity produto;
 	private int quantidadeDeProdutos;
 	private double valorproduto;

@@ -32,7 +32,6 @@ public class CarrinhoEntity {
 
 	// construtor padrão //
 	public CarrinhoEntity() {
-		this.produtosCarrinho = new ArrayList<>();
 	}
 
 	// construtor com atributis//
@@ -44,9 +43,10 @@ public class CarrinhoEntity {
 	}
 
 	// construtor para iniciar objeto //
-	public CarrinhoEntity(ProdutosCarrinhoEntity produtoNovo) {
-		this();
+	public CarrinhoEntity(ProdutosCarrinhoEntity produtoNovo,UsuarioEntity usuarioCarrinho) {
+		this.produtosCarrinho = new ArrayList<>();
 		this.produtosCarrinho.add(produtoNovo);
+		this.usuarioCarrinho = usuarioCarrinho;
 	}
 
 	// metodos especiais
