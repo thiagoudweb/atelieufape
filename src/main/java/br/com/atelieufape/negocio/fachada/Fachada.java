@@ -185,7 +185,7 @@ public class Fachada {
 
 	}
 
-	public CarrinhoEntity listarProdutosCarrinho(Long idUsuario) throws CarrinhoNaoEncontradoException {
+	public CarrinhoEntity pegarCarrinho(Long idUsuario) throws CarrinhoNaoEncontradoException {
 
 		try {
 			CarrinhoEntity verificarCarrinho = cadastroCarrinho.pegarCarrinho(idUsuario);
@@ -194,5 +194,17 @@ public class Fachada {
 		} catch (Exception e) {
 			throw new CarrinhoNaoEncontradoException("Carrinho infelizmente não foi encontrado!");
 		}
+
 	}
+	
+	public List<ProdutosCarrinhoEntity> listarProdutosCarrinho(Long id) throws CarrinhoNaoEncontradoException {
+	    CarrinhoEntity veriCarrinhoExistente = cadastroCarrinho.pegarCarrinho(id);
+
+	    if (veriCarrinhoExistente == null) {
+	        throw new CarrinhoNaoEncontradoException("Carrinho não encontrado para o ID do usuário: " + id);
+	    }
+
+	    return veriCarrinhoExistente.getProdutosCarrinho();
+	}
+
 }

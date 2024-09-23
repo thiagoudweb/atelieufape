@@ -19,6 +19,7 @@ public class UsuarioEntity extends UsuarioAbstract {
 	private CarrinhoEntity carrinho;
 	public UsuarioEntity() {
 		super();
+		
 	}
 
 }

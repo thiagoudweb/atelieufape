@@ -1,5 +1,7 @@
 package br.com.atelieufape.comunicacao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.atelieufape.negocio.basico.ProdutoEntity;
+import br.com.atelieufape.negocio.basico.ProdutosCarrinhoEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CarrinhoException;
 import br.com.atelieufape.negocio.cadastro.exception.CarrinhoNaoEncontradoException;
@@ -41,12 +45,27 @@ public class CarrinhoController {
 
 		try {
 
-			fachada.listarProdutosCarrinho(id);
-			
+			fachada.pegarCarrinho(id);
+
 			return ResponseEntity.ok("carrinho aqui ó");
 		} catch (CarrinhoNaoEncontradoException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+	}
+	@GetMapping("/listarProdutosCarrinho/{id}")
+	public ResponseEntity<?> listarProdutos(@PathVariable Long id) {
+	    try {
+	        List<ProdutosCarrinhoEntity> produtos = fachada.listarProdutosCarrinho(id);
+	        
+	        if (produtos.isEmpty()) {
+	            return ResponseEntity.ok("O carrinho está vazio.");
+	        }
+
+	        return ResponseEntity.ok(produtos);
+
+	    } catch (CarrinhoNaoEncontradoException e) {
+	        return ResponseEntity.badRequest().body(e.getMessage());
+	    }
 	}
 
 }

@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -23,6 +24,7 @@ public class CarrinhoEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@OneToOne
+	@JoinColumn(name = "usuario_id")
 	private UsuarioEntity usuarioCarrinho;
 	@OneToMany(mappedBy = "carrinhoUsuario", cascade = CascadeType.ALL)
 	private List<ProdutosCarrinhoEntity> produtosCarrinho;
@@ -30,6 +32,7 @@ public class CarrinhoEntity {
 
 	// construtor padrão //
 	public CarrinhoEntity() {
+		this.produtosCarrinho = new ArrayList<>();
 	}
 
 	// construtor com atributis//
@@ -42,7 +45,7 @@ public class CarrinhoEntity {
 
 	// construtor para iniciar objeto //
 	public CarrinhoEntity(ProdutosCarrinhoEntity produtoNovo) {
-		this.produtosCarrinho = new ArrayList<>();
+		this();
 		this.produtosCarrinho.add(produtoNovo);
 	}
 
