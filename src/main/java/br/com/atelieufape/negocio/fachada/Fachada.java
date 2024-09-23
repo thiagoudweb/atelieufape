@@ -16,6 +16,7 @@ import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.CarrinhoException;
+import br.com.atelieufape.negocio.cadastro.exception.CarrinhoNaoEncontradoException;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroCarrinho;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroCompra;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroExpositor;
@@ -176,9 +177,22 @@ public class Fachada {
 
 			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
 			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
+			UsuarioEntity usuarioCadastrado = cadastroUsuario.buscarUsuarioPorID(idUsuario);
 			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
+			salvarCarrinho.setUsuarioCarrinho(usuarioCadastrado);
 			return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
 		}
 
+	}
+
+	public CarrinhoEntity listarProdutosCarrinho(Long idUsuario) throws CarrinhoNaoEncontradoException {
+
+		try {
+			CarrinhoEntity verificarCarrinho = cadastroCarrinho.pegarCarrinho(idUsuario);
+			return verificarCarrinho;
+
+		} catch (Exception e) {
+			throw new CarrinhoNaoEncontradoException("Carrinho infelizmente não foi encontrado!");
+		}
 	}
 }

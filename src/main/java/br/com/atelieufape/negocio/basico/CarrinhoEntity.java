@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 //Autor: Thiago Silva
@@ -21,7 +22,7 @@ public class CarrinhoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne
+	@OneToOne
 	private UsuarioEntity usuarioCarrinho;
 	@OneToMany(mappedBy = "carrinhoUsuario", cascade = CascadeType.ALL)
 	private List<ProdutosCarrinhoEntity> produtosCarrinho;

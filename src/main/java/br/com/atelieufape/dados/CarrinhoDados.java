@@ -9,5 +9,5 @@ import br.com.atelieufape.negocio.basico.CarrinhoEntity;
 @Repository
 public interface CarrinhoDados extends JpaRepository<CarrinhoEntity, Long> {
 
-	public Optional<CarrinhoEntity> findByUsuarioCarrinho_Id (Long iDusuario);
+	public Optional<CarrinhoEntity> findByusuarioCarrinho_Id (Long iDusuario);
 }

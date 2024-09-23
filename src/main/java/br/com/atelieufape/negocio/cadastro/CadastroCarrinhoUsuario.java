@@ -37,7 +37,7 @@ public class CadastroCarrinhoUsuario implements ContratoCadastroCarrinho {
 
 	@Override
 	public CarrinhoEntity pegarCarrinho(Long usuarioId) throws CarrinhoNaoEncontradoException {
-	    Optional<CarrinhoEntity> carrinho = carrinhoDados.findByUsuarioCarrinho_Id(usuarioId);
+	    Optional<CarrinhoEntity> carrinho = carrinhoDados.findByusuarioCarrinho_Id(usuarioId);
 	    
 	    if (carrinho.isPresent()) {
 	        return carrinho.get();
