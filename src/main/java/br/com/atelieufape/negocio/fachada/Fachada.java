@@ -205,5 +205,7 @@ public class Fachada {
 
 	    return veriCarrinhoExistente.getProdutosCarrinho();
 	}
+	
+	
 
 }
