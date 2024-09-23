@@ -135,16 +135,30 @@ public class Fachada {
     }
 
     // carrinho
-    public CarrinhoEntity adicionarProdutoCarrinho(Long id, int quantidade)
-            throws CarrinhoException, CadastroProdutoException {
+    public CarrinhoEntity adicionarProdutoCarrinho(Long id, int quantidade, Long idUsuario)
+			throws CarrinhoException, CadastroProdutoException {
 
-        if (quantidade <= 0) {
-            throw new CarrinhoException("A quantidade de produtos selecionados é inválida");
-        } else {
-            ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
-            ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
-            CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
-            return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
-        }
-    }
+		if (quantidade <= 0) {
+			throw new CarrinhoException("A quantidade de produtos selecionados é inválida");
+		}
+
+		try {
+
+			CarrinhoEntity veriCarrinhoExistente = cadastroCarrinho.pegarCarrinho(idUsuario);
+
+			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
+			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
+			veriCarrinhoExistente.setProdutosCarrinho(novoProdutoCarrinho);
+			return veriCarrinhoExistente;
+
+		} catch (CarrinhoException e) {
+            
+			// criar um novo carrinho
+			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
+			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
+			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
+			return cadastroCarrinho.salvarCarrinho(salvarCarrinho);
+		}
+
+	}
 }

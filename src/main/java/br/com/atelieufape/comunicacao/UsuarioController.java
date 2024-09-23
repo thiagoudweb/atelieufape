@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import br.com.atelieufape.negocio.basico.UsuarioEntity;
-import br.com.atelieufape.negocio.cadastro.exception.AtualizarUsuarioException;
-import br.com.atelieufape.negocio.cadastro.exception.CadastroExpositorException;
-import br.com.atelieufape.negocio.cadastro.exception.CadastroUsuarioException;
 import br.com.atelieufape.negocio.cadastro.exception.UsuarioException;
 import br.com.atelieufape.negocio.fachada.Fachada;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+//Autor: Thiago Silva
+//Controller responsável por fazer o cadastro inicial do usuario, caso ele opte por ser um usuario comum.
 @Controller
 @CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/usuarios")
@@ -28,6 +32,11 @@ public class UsuarioController {
 	@Autowired
 	private Fachada fachada;
 
+
+	@Operation(summary = "Cadastra usuário", description = "Cadastra um novo usuário no sistema.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuário cadastrado com sucesso!"),
+			@ApiResponse(responseCode = "400", description = "Usuário já existe!", content = @Content(schema = @Schema(implementation = String.class))) })
 	@PostMapping("/cadastrar")
 	public ResponseEntity<?> cadastrarUsuario(@RequestBody UsuarioEntity usuario) {
 		try {
@@ -38,6 +47,10 @@ public class UsuarioController {
 		}
 	}
 
+	@Operation(summary = "Atualiza um usuário", description = "Atualiza os dados de um usuário pelo ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso!"),
+			@ApiResponse(responseCode = "400", description = "Erro ao atualizar o usuário!", content = @Content(schema = @Schema(implementation = String.class))) })
 	@PatchMapping("/atualizar/{id}")
 	public ResponseEntity<String> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioEntity usuario) {
 
@@ -46,7 +59,7 @@ public class UsuarioController {
 			UsuarioEntity user = usuario;
 			user.setId(id);
 			fachada.atualizarUsuario(user);
-			return ResponseEntity.ok("O Usuario" + user.getNome() + "Atualizado");
+			return ResponseEntity.ok("O usuário " + user.getNome() + " foi atualizado");
 
 		} catch (UsuarioException e) {
 
@@ -54,6 +67,10 @@ public class UsuarioController {
 		}
 	}
 
+	@Operation(summary = "Busca usuário por ID", description = "Busca os dados de um usuário pelo ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso!"),
+			@ApiResponse(responseCode = "400", description = "Erro ao buscar o usuário!", content = @Content(schema = @Schema(implementation = String.class))) })
 	@GetMapping("/buscar/{id}")
 	public ResponseEntity<?> buscarUsuarioPorID(@PathVariable Long id) {
 		try {
@@ -63,13 +80,17 @@ public class UsuarioController {
 		}
 	}
 
+	@Operation(summary = "Deleta usuário", description = "Remove um usuário pelo ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuário deletado com sucesso!"),
+			@ApiResponse(responseCode = "400", description = "Erro ao deletar o usuário!", content = @Content(schema = @Schema(implementation = String.class))) })
 	@DeleteMapping("/deletar/{id}")
 	public ResponseEntity<String> deletarUsuarioPorID(@PathVariable Long id) {
 
 		try {
 
 			fachada.removerUsuarioPorID(id);
-			return ResponseEntity.ok("Usuario deletado com sucesso!");
+			return ResponseEntity.ok("Usuário deletado com sucesso!");
 
 		} catch (UsuarioException e) {
 
@@ -77,6 +98,10 @@ public class UsuarioController {
 		}
 	}
 
+	@Operation(summary = "Lista todos os usuários", description = "Retorna uma lista com todos os usuários cadastrados.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Lista de usuários recuperada com sucesso!"),
+			@ApiResponse(responseCode = "400", description = "Erro ao recuperar a lista de usuários!", content = @Content(schema = @Schema(implementation = String.class))) })
 	@GetMapping("/listar")
 	public ResponseEntity<?> listarUsuarios() {
 		try {
