@@ -1,6 +1,7 @@
 package br.com.atelieufape;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,21 +50,22 @@ public class CarrinhoInegracaoTest {
 		assertNotNull(teste);
 
 	}
-	
+
 	@Test
 	public void pegarCarrinho() throws CarrinhoNaoEncontradoException {
 		// usuario
 		Long idUsuario = 2L;
-		UsuarioEntity usuarioTest = new UsuarioEntity();
-		usuarioTest.setId(idUsuario);
-		usuarioTest.setNome("Usuário Teste");
-
 		CarrinhoEntity teste = fachada.pegarCarrinho(idUsuario);
 
 		assertNotNull(teste);
 
 	}
-	
-	
+
+	public void listarCarrinho() throws CarrinhoNaoEncontradoException {
+		Long idUsuario = 2L;
+
+		List<ProdutosCarrinhoEntity> teste = fachada.listarProdutosCarrinho(idUsuario);
+		assertNotNull(teste);
+	}
 
 }
