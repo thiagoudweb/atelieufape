@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import br.com.atelieufape.negocio.basico.ProdutoEntity;
 import br.com.atelieufape.negocio.basico.ProdutosCarrinhoEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.cadastro.exception.CarrinhoException;
@@ -57,7 +55,6 @@ public class CarrinhoController {
     @GetMapping("/pegarCarrinho/{id}")
     public ResponseEntity<?> pegarCarrinho(@PathVariable Long id) {
         try {
-            // Método para pegar o carrinho (ainda não retornado)
             fachada.pegarCarrinho(id);
             return ResponseEntity.ok("Carrinho aqui!");
         } catch (CarrinhoNaoEncontradoException e) {
@@ -83,5 +80,4 @@ public class CarrinhoController {
         }
     }
 
-   
 }

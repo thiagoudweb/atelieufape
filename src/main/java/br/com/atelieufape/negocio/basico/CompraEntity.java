@@ -4,6 +4,11 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+
+
+//Autor: Tiago José
+//Essa classe é responsável por modelar uma compra no sistema.
+//Ela mantém as informações sobre a data da compra, o valor total,
 @Entity
 @Table(name = "TABELA_COMPRA")
 public class CompraEntity {
@@ -14,6 +19,10 @@ public class CompraEntity {
 
     private LocalDate dataCompra;
     private double valorTotal;
+    
+    @OneToOne
+    @JoinColumn(name = "carrinho_id")
+    private CarrinhoEntity carrinho;
     
     @Enumerated(EnumType.STRING)
     private StatusCompra status;
@@ -89,5 +98,25 @@ public class CompraEntity {
 
     public void setProdutos(List<ProdutoEntity> produtos) {
         this.produtos = produtos;
+    }
+    
+    
+    public CarrinhoEntity getCarrinho() {
+        return carrinho;
+    }
+
+    public void setCarrinho(CarrinhoEntity carrinho) {
+        this.carrinho = carrinho;
+    }
+    
+    // Método para obter o usuário associado ao carrinho
+    public UsuarioEntity getUsuarioDaCompra() {
+        return carrinho.getUsuarioCarrinho();
+    }
+    
+    public double calcularValorTotal() {
+        return this.carrinho.getProdutosCarrinho().stream()
+            .mapToDouble(produto -> produto.getValorFinal() * produto.getQuantidadeDeProdutos())
+            .sum();
     }
 }

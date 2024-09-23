@@ -2,6 +2,7 @@ package br.com.atelieufape;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.atelieufape.negocio.basico.CompraEntity;
 import br.com.atelieufape.negocio.basico.ProdutoEntity;
@@ -13,6 +14,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Autor: Tiago José
+// Essa classe é responsável por realizar testes unitários na entidade `CompraEntity`.
+// Ela valida o comportamento do construtor da classe `CompraEntity`,
+@SpringBootTest
 public class CompraEntityTest {
 
     private UsuarioExpositorEntity usuarioExpositor;
