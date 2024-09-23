@@ -5,7 +5,8 @@ import br.com.atelieufape.negocio.contratos.UsuarioAbstract;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Table;
-
+// Autor: Thiago Silva
+// Essa classe é responsável por instanciar e iniciar o objeto usuario comum no sistema!
 @Entity
 @Table(name = "TABELA_USUARIO")
 public class UsuarioEntity extends UsuarioAbstract {

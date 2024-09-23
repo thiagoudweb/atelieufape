@@ -145,15 +145,36 @@ public class Fachada {
 		try {
 
 			CarrinhoEntity veriCarrinhoExistente = cadastroCarrinho.pegarCarrinho(idUsuario);
-
 			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
-			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
-			veriCarrinhoExistente.setProdutosCarrinho(novoProdutoCarrinho);
+			List<ProdutosCarrinhoEntity> produtosUser = veriCarrinhoExistente.getProdutosCarrinho();
+
+			// sessão pra verificar se o produto ja ta no carrinho, pra n ter muitos
+			// produtos iguais e atualizar a quantidade apenas
+
+			boolean produtoJaNoCarrinho = false;
+			for (ProdutosCarrinhoEntity produtoCarrinhoUsuario : produtosUser) {
+
+				if (produtoCarrinhoUsuario.getProduto().equals(produtoSelecionado)) {
+					produtoCarrinhoUsuario
+							.setQuantidadeDeProdutos(produtoCarrinhoUsuario.getQuantidadeDeProdutos() + quantidade);
+					produtoJaNoCarrinho = true;
+					break;
+
+				}
+			}
+			if (!produtoJaNoCarrinho) {
+				ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
+				veriCarrinhoExistente.getProdutosCarrinho().add(novoProdutoCarrinho);
+
+			}
+
+			cadastroCarrinho.salvarCarrinho(veriCarrinhoExistente);
 			return veriCarrinhoExistente;
 
 		} catch (CarrinhoException e) {
-            
+
 			// criar um novo carrinho
+
 			ProdutoEntity produtoSelecionado = cadastroProduto.buscarProdutoPorId(id);
 			ProdutosCarrinhoEntity novoProdutoCarrinho = new ProdutosCarrinhoEntity(produtoSelecionado, quantidade);
 			CarrinhoEntity salvarCarrinho = new CarrinhoEntity(novoProdutoCarrinho);
