@@ -168,8 +168,7 @@ public class Fachada {
 
 			}
 
-			cadastroCarrinho.salvarCarrinho(veriCarrinhoExistente);
-			return veriCarrinhoExistente;
+			return cadastroCarrinho.salvarCarrinho(veriCarrinhoExistente);
 
 		} catch (CarrinhoException e) {
 
