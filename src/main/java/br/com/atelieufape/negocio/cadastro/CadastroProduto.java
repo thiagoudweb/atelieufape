@@ -11,6 +11,8 @@ import br.com.atelieufape.negocio.basico.ProdutoEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 import br.com.atelieufape.negocio.contratos.ContratoCadastroProduto;
 
+//Autor: Luiza Marques
+//Esta classe é responsável por implementar os métodos visto no ProdutoController.
 @Service
 public class CadastroProduto implements ContratoCadastroProduto {
 

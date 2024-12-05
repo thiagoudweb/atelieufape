@@ -5,6 +5,8 @@ import java.util.List;
 import br.com.atelieufape.negocio.basico.ProdutoEntity;
 import br.com.atelieufape.negocio.cadastro.exception.CadastroProdutoException;
 
+//Autor: Luiza Marques
+//Esta interface é responsável pela assinatura dos métodos visíveis ao usuário. 
 public interface ContratoCadastroProduto {
 	
 	public ProdutoEntity cadastrarProduto(ProdutoEntity produto) throws CadastroProdutoException;
